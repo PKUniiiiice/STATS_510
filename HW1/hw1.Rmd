@@ -1,0 +1,380 @@
+---
+title: "STATS 510 HW1"
+author: "Minxuan Chen"
+date: "2023/9/9"
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    fig_width: 6
+    fig_height: 5
+  html_document:
+    fig_width: 6
+    toc_depth: 4
+  word_document:
+    toc_depth: '4'
+fontsize: 12pt
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = TRUE,
+	warning = TRUE
+)
+```
+
+## Problem 1
+We need some lemmas to complete this proof.
+
+(1). Rational numbers are dense in the reals, i.e.
+$$
+\forall x \in \mathbb{R},\, \forall \epsilon>0, \,
+\exists\,r \in \mathbb{Q}\;\; \text{ s.t. } \;\;  |x-r|< \epsilon
+$$
+From this, we can get
+$$
+\forall a<b,\; a,b\in \mathbb{R},\, \,
+\exists\,r \in \mathbb{Q}\;\; \text{ s.t. } \;\;  a<r<b
+$$
+
+\vspace{15pt}
+
+(2). Utilizing Lemma (1), we can construct a sequence of rational numbers converging to any given real number $a$. Formally
+$$
+\begin{aligned}
+&\forall a \in \mathbb{R}, \exists\,\text{sequence } \{r_n|r_n \in \mathbb{Q},\,n\in \mathbb{N}^+\}\;\text{ s.t. }\\
+&\lim_{n \to \infty} r_n = a
+\end{aligned}
+$$
+In particular, there are two typical types of sequences ${r_n}$.
+$$
+\left\{r_n\left |a-\frac{1}{n}<r_n<a, r_n \in \mathbb{Q}\right.\right\} 
+ \text{or }\left\{r_n\left |a<r_n<a+\frac{1}{n}, r_n \in \mathbb{Q}\right.\right\}
+$$
+\vspace{15pt}
+
+(3). Using Lemma (2), it's easy to get
+$$
+\begin{aligned}
+&\forall a \in \mathbb{R}, \text{ interval } (-\infty,a)= \bigcup_{n=1}^{\infty}(-\infty, r_n],\\
+&\text{where } \{r_n\}= \left\{r_n\left |a-\frac{1}{n}<r_n<a, r_n \in \mathbb{Q}\right.\right\} 
+\end{aligned}
+$$
+
+**Proof**:
+
+First, $\forall a_0 \in (-\infty,a)$, we have $a_0<a$. Using Lemma (2) and the definition of limit, we take $\epsilon=a-a_0>0$,
+$$
+\exists N \in \mathbb{N}, \forall n^* \geq N, |a-r_{n^*}|<a-a_0
+$$
+then
+$$
+a_0-a<r_{n^*}-a<a-a_0 \longrightarrow a_0 < r_{n^*}
+$$
+Therefore $a_0 \in \bigcup_{n=1}^{\infty}(-\infty, r_n]$.
+
+Conversely, $\forall a_0 \in \bigcup_{n=1}^{\infty}(-\infty, r_n]$, $a_0<r_n<a, \forall n$. So $a_0 \in (-\infty,a)$.
+
+Hence we have $(-\infty,a)= \bigcup_{n=1}^{\infty}(-\infty, r_n]$
+
+Similarly, we have
+$$
+\begin{aligned}
+&\forall a \in \mathbb{R}, \text{ interval } (-\infty,a]= \bigcap_{n=1}^{\infty}(-\infty, r_n],\\
+&\text{where } \{r_n\}= \left\{r_n\left |a<r_n<a+\frac{1}{n}, r_n \in \mathbb{Q}\right.\right\} 
+\end{aligned}
+$$
+
+**Proof**:
+
+$(-\infty,a] \subseteq \bigcap_{n=1}^{\infty}(-\infty, r_n]$ is obvious.
+
+Conversely, $\forall r \in \bigcap_{n=1}^{\infty}(-\infty, r_n]$, we employ a proof by contradiction. 
+
+If $r>a$, take $\epsilon=r-a>0$, then
+$$
+\exists n^* \geq N, |a-r_{n^*}|<r-a \longrightarrow r_{n^*} < r
+$$
+However, $r$ is an element of the infinity intersection, so
+$$
+\forall n, r \leq r_n
+$$
+By contradiction, $r \geq a$, i.e.
+$\bigcap_{n=1}^{\infty}(-\infty, r_n] \subseteq (-\infty,a]$.
+
+\vspace{15pt}
+
+(4). 
+$$
+\forall x \in \mathbb{R}, \text{ interval } (-\infty, x] = \bigcap_{n=1}^{\infty} \left( \bigcup_{m=1}^{\infty}  \left(x-m, x+\frac{1}{n} \right) \right) 
+$$
+
+The proof is straightforward. The inner unions result in $(-\infty, x+\frac{1}{n})$.  Since the right endpoint $x+\frac{1}{n} \to x$ and $x < x+\frac{1}{n}$, the outer intersections result in $(-\infty, x]$.
+
+\vspace{15pt}
+
+(5). Suppose $\{\Sigma_\alpha:\alpha \in \mathcal{A} \}$ is a collection of $\sigma$-algebras on a space $X$, then the intersection of a collection of $\sigma$-algebras is a $\sigma$-algebra.
+
+\vspace{30pt}
+
+Now, let's begin the proof.
+
+First, we prove 
+$$
+\mathcal{B}=\sigma(\mathcal{C}_{\text{intervals}}) \subseteq \sigma(\mathcal{C})
+$$
+Note that
+$$
+\begin{aligned}
+&\forall \text{ open interval } (a,b), a,b\in \mathbb{R}\\
+&(a,b) = \Big((-\infty,a] \Big)^c \bigcap\, (-\infty,b)\\
+&\quad \quad \,= \left(\bigcap_{n=1}^{\infty}(-\infty, s_n] \right)^c \bigcap\,
+\left( \bigcup_{n=1}^{\infty}(-\infty, r_n] \right) \, (\text{Lemma (3)})\\
+\end{aligned}
+$$
+where 
+$$
+ \{s_n\}=\left\{s_n\left |a<s_n<a+\frac{1}{n}, s_n \in \mathbb{Q}\right.\right\}
+ \text{and }  \{r_n\}=\left\{r_n\left |b-\frac{1}{n}<r_n<b, r_n \in \mathbb{Q}\right.\right\} 
+$$
+
+By the definition of $\sigma(\mathcal{C})$ and Lemma (5), $\sigma(\mathcal{C})$ is a $\sigma$-algebra and $\mathcal{C} \subseteq \sigma(\mathcal{C})$. Therefore, $\sigma(\mathcal{C})$ is closed under countable unions, intersections and complements.
+
+Note that both $(-\infty, s_n]$ and $(-\infty, r_n]$ are elements of $\mathcal{C}$, i.e.
+$$
+(-\infty, s_n], (-\infty, r_n] \in \mathcal{C} \subseteq \sigma(\mathcal{C}), \forall\, n
+$$
+so
+$$
+(a,b) = \left(\bigcap_{n=1}^{\infty}(-\infty, s_n] \right)^c \bigcap\,
+\left( \bigcup_{n=1}^{\infty}(-\infty, r_n] \right) \in \sigma(\mathcal{C})
+$$
+Since $(a,b)$ is arbitrary, we have
+$$
+\mathcal{C}_{\text{intervals}} \subseteq \sigma(\mathcal{C})
+$$
+By the definition of $\sigma(\cdot)$, we have
+$$\mathcal{B}=\sigma(\mathcal{C}_{\text{intervals}}) \subseteq \sigma(\mathcal{C})$$
+
+Conversely, use Lemma (4), 
+$$
+\forall x \in \mathbb{Q}, \text{ interval } (-\infty, x] = \bigcap_{n=1}^{\infty} \left( \bigcup_{m=1}^{\infty}  \left(x-m, x+\frac{1}{n} \right) \right) 
+$$
+Note that $(x-m, x+\frac{1}{n})$ is an element of $\mathcal{C}_{\text{intervals}}$.
+
+Similarly, 
+$$
+(-\infty,x] \in \sigma(\mathcal{C}_{\text{intervals}}) \longrightarrow \mathcal{C} \subseteq \sigma(\mathcal{C}_{\text{intervals}})  \longrightarrow  \sigma(\mathcal{C}) \subseteq \sigma(\mathcal{C}_{\text{intervals}})=\mathcal{B}
+$$
+
+Combine two parts, 
+$$
+\mathcal{B}=\sigma(\mathcal{C})
+$$
+
+## Problem 2
+### (a)
+Given $A_1,...,A_n$ are mutually independent, consider $A_1^c,A_2,...,A_n$. We use $1^*$ to denote the subscript of event $A_1^c$, i.e, $A_1^c = A_{1^*}$.  We can partition the collection of any non-empty subset $S \subset {1^*,2,3,...,n}$ into two disjoint classes.
+$$
+\mathcal{C}_1=\{S|1^* \in S\}, \mathcal{C}_2=\{S|1^* \notin S\}, 
+$$
+For the class $\mathcal{C}_2$, $\forall S \in \mathcal{C}_2$,
+$$
+\mathbb{P}\left(\bigcap_{i \in S} A_i\right)=\prod_{i \in S} \mathbb{P}\left(A_i\right)
+$$
+This is guaranteed by mutual independence.
+
+As for the class $\mathcal{C}_1$, $\forall S \in \mathcal{C}_1$, note that
+$$
+S = \{1^*\} \cup(  S/\{1^*\})
+$$
+Denote $\bigcap_{ i\in S} A_i$ by  $A_{S}$ and $\bigcap_{ i\in S/\{1^*\}} A_i$ by  $A_{S^-}$  , then
+$$
+A_{S^-} = (A_{S^-} \cap A_{1^*}) \cup (A_{S^-} \cap A_{1}) = A_S \cup (A_{S^-} \cap A_{1})
+$$
+therefore
+$$
+\mathbb{P}(A_S) = \mathbb{P}(A_{S^-}) - \mathbb{P}(A_{S^-}\cap A_{1})
+$$
+Note that
+$$
+S^- \subseteq \{2,...,n\}  \subseteq \{1,...,n\}
+$$
+By mutually independence of $A_1,...,A_n$,
+$$
+\begin{aligned}
+&\mathbb{P}(\bigcap_{ i\in S} A_i) = \prod_{i \in S^-}\mathbb{P}(A_i) -  \left( \prod_{i \in S^-}\mathbb{P}(A_i) \right) \cdot \mathbb{P}(A_{1})\\
+\longrightarrow& \mathbb{P}(\bigcap_{ i\in S} A_i) = \left( \prod_{i \in S^-}\mathbb{P}(A_i) \right)  ( 1-\mathbb{P}(A_{1}))=\left( \prod_{i \in S^-}\mathbb{P}(A_i) \right) \mathbb{P}(A_{1^*}) = \prod_{i \in S}\mathbb{P}(A_i)
+\end{aligned}
+$$
+
+Combine thes results in $\mathcal{C}_1$ and $\mathcal{C}_2$,
+$$
+\forall S \subset {1^{*},2,3,...,n}, \quad\mathbb{P}\left(\bigcap_{i \in S} A_i\right)=\prod_{i \in S} \mathbb{P}\left(A_i\right)
+$$
+Hence, $A_1^c,A_2,...,A_n$ are also mutually independent.
+
+Using this property, given $A_1,A_2,...,A_n\,\text{ s.t. } 0<\mathbb{P}(A_i)<1$, if there exists some $A_k$ and $\mathbb{P}(A_k)>\frac{1}{2}$, we can regard this $A_k$ as previous $A_1$ and then take its complement. Then, we can get $A_1,...,A_k,...A_n$ are mutually independent. We can repeat this procedure until we get a series of mutually independent  
+events, each of which satisfies $0 < \mathbb{P}(A_i) \leq \frac{1}{2}$."
+
+(Rigorously, we must demonstrate the existence of an event $A_i$ w.p. $\leq \frac{1}{2}$. Since $0<\mathbb{P}(A_i)<1$, we must have $N\geq2$, and event $A_i$ must encompass at least one outcome. So if we set $\mathbb{P}(A_i) = \frac{1}{N}$, we can find such an $A_i$.)
+
+Now, we have mutually independent $A_1,...A_n$ and $0<\mathbb{P}(A_i)\leq \frac{1}{2}, \forall i$. Then
+$$
+0<\mathbb{P}(A_1...A_n) = \prod_{i=1}^n P(A_i) \leq  \frac{1}{2^n}
+$$
+Note that $0<\mathbb{P}(A_1...A_n)$ implies $A_1...A_n \neq \emptyset$, therefore, $A_1...A_n$ must contain at least one outcome, thus
+$$
+\frac{1}{N} \leq \mathbb{P}(A_1...A_n) \leq \frac{1}{2^n} \longrightarrow n \leq \log_2N
+$$
+
+### (b)
+Let's examine a random sequence of length $n$, where each digit is either 0 or 1, such as 000111000..., and define the sample space $S$ as the set containing all possible sequences. It's evident that $S$ consists of $N = 2^n$ elements.
+
+We employ the pre-defined probability measure to select a sequence randomly from the sample space. Subsequently, we define the event $A_1$ as follows: "The i-th digit of the drawn sequence is 1".
+$$
+\mathbb{P}(A_i) = \frac{|A_i|}{N} = \frac{1\times2^{n-1}}{2^n} = \frac{1}{2}
+$$
+To prove that $A_1,...A_n$ are mutually independent, for any non-empty subset $\{i_1,...i_k\} \subseteq S$
+$$
+\mathbb{P}(A_{i_1}...A_{i_k}) = \mathbb{P}(\text{The } i_1\text{-th}, i_2\text{-th}...,i_k\text{-th digits are all 1}) = \frac{2^{n-k}}{2^n} = \frac{1}{2^k} 
+= \prod_{i=1}^k \mathbb{P}(A_{i_k}) 
+$$
+
+Hence, the previous construction satisfies the property of mutually independence.
+
+
+### (c)
+
+
+
+## Problem 3
+We use $H_1$ and $T_1$ to denote the first penny as head and tail, resp., and similarly, $H_2$ and $T_2$ for the second penny.
+
+Since they are tossed independently, we have
+$$
+p_0 = P(\text{0 heads}) = P(T_1T_2)=(1-u)(1-w)
+$$
+$$
+p_1 = P(\text{1 heads}) = P(H_1T_2 \cup T_1H_2)=P(H_1T_2)+P(T_1H_2)=u+w-2uw
+$$
+$$
+p_1 = P(\text{2 head}) = P(H_1H_2) = uw
+$$
+
+If $p_0=p_1=p_2$,
+$$
+(1-u)(1-w)=u+w-2uw=uw
+$$
+We can't get a real-number solution of this equation. Hence, we can't choose $u,w$ such that $p_0=p_1=p_2$.
+
+## Problem 4
+### (a)
+We number the balls and cell from 1 to n, respectively.
+
+Sample space: $S=\{i_1,...,i_n\}, i_j=1,2,...,n$, where $i_j$ represents the number of the cell in which the j-th ball is placed.
+
+Since each ball can be placed in any of the n cells, $|S|=n^n$.
+
+To ensure that exactly one cell remains empty, we begin by selecting one of the n cells to be empty, which provides us with n choices. Then, we distribute n balls into the remaining n-1 cells, ensuring that each cell contains at least one ball. Consequently, there will be exactly one cell with 2 balls.
+
+We first choose 2 balls from the n available balls, which can be done in ${n \choose 2}$ ways. Next, we designate one of the n-1 cells to hold these 2 balls, allowing for $n-1$ choices. Finally, we distribute the remaining balls among the n-2 cells, which can be done in $(n-2)!$ ways.
+
+In total, there are
+$$
+n\cdot {n \choose 2} \cdot (n-1) \cdot (n-2)! = {n \choose 2} n!
+$$
+choices. Hence
+$$
+P(\text{exactly one cell remains empty}) = \frac{{n \choose 2} n!}{n^n}
+$$
+
+### (b)
+We number the rings from 1 to 12 and the days of the week from 1 to 7.
+
+Sample space: $S=\{i_1,...,i_12\}, i_j=1,2,...,7$, where $i_j$ represents the day number on which the j-th telephone rings.
+
+$|S| = 7^{12}$.
+
+To ensure that we receive at least one call each day, we need to distribute the times of rings across the days. We can achieve this by assigning a sequence to the 7 days of the week. For example, "6111111" means we receive 6 rings on Monday and only 1 call on the other days, while "5211111" implies 5 rings on Monday, 2 rings on Tuesday, and 1 call on the other days. It's important to note that, when considering the number of choices for these sequences, "6111111" and "1611111" are equivalent to some extent.
+
+For "6111111," we start by selecting one of the seven days for 6 rings (7 choices). Then, we choose 6 rings from the 12 available (${12\choose6}$ choices) and distribute the remaining ringss in $6!$ ways.
+
+As another example, consider "3222111." Here, we allocate 3 rings to one day (7 choices), select 3 rings from 12 (${12\choose3}$ choices), choose 3 days to have 2 rings each (${9\choose3}$ choices), and then distribute the remaining rings across the selected days (${9\choose2}$ choices for the first, ${7\choose2}$ choices for the second, and ${5\choose2}$ choices for the third), followed by arranging the last 3 rings ($3!$ ways)."
+
+We use a table to list all sequences and choices
+
+| Equivalent Sequence | Choices                                                      |
+| :------------------: | ------------------------------------------------------------ |
+| 6111111            | $7{12 \choose 6}  6!$                                        |
+| 5211111            | $7  {12 \choose 5}6 {7 \choose 2} 5!$                        |
+| 4221111            | $7 {12 \choose 4} {6\choose2} {8\choose2} {6\choose2} 4!$    |
+| 4311111            | $7{12\choose4}6{8\choose3}5!$                                |
+| 3321111            | ${7\choose2}{12\choose3}{9\choose3}5{6\choose2}4!$           |
+| 3222111            | $7{12\choose3}{6\choose3}{9\choose2}{7\choose2}{5\choose2} 3!$ |
+| 2222211            | ${7\choose5}{12\choose2}{10\choose2}{8\choose2}{6\choose2}{4\choose2}2!$ |
+
+```{r}
+(7 * choose(12, 6) * factorial(6) + 
+7 * choose(12, 5) * 6 * choose(7, 2) * factorial(5) + 
+7 * choose(12, 4) * choose(6, 2) * choose(8, 2) * choose(6, 2) * factorial(4) + 
+7 * choose(12, 4) * 6 * choose(8, 3) * factorial(5) + 
+choose(7, 2) * choose(12, 3) * choose(9, 3) * 5 * choose(6, 2) * factorial(4) + 
+7 * choose(12, 3) * choose(6, 3) * choose(9, 2) * choose(7, 2) *
+choose(5, 2) * factorial(3) + 
+choose(7, 5) * choose(12, 2) * choose(10, 2) * choose(8, 2) *
+choose(6, 2) * choose(4, 2) * factorial(2))/7^12
+```
+The probability is 0.2285.
+
+## Problem 5
+We use $k_i,i=1,2...,n$ to denote the number of occurrences of $x_i$ in the sample we obtain. Note that in this problem, sampling with replacement is equivalent to placing $n$ identical balls into $n$ distinguishable cells without restrictions. We can also use $k_i$ to represent the number of balls in cell $i$.
+
+All possible ways of placing are $n^n$. When given $k_1,...k_n$ is given, to get this sample, we first choose $k_1$ balls from the $n$ balls to place into cell 1, then choose $k_2$ balls from the remaining $n - k_1$ balls to place into cell 2, and so on. The total number of ways to do this is
+$$\frac{n!}{k_1!k_2!\cdots k_n!}$$
+
+Given that $x_1, x_2, \ldots, x_n$ are all distinct values, in order to obtain the average $(x_1 + x_2 + \cdots + x_n)/n$, the only valid configuration is to draw exactly one occurrence for each $x_i$, which means $k_1 = k_2 = \cdots = k_n = 1$. Therefore, the probability of obtaining this specific average is:
+$$
+\frac{n!}{n^n}
+$$
+
+To demonstrate that this probability is the highest, consider that any other choices of $k_i$ must lead to at least one $k_i$ being greater than 1, with some $k_i$ being zero. Since $0! = 1! = 1$, the configurations with $k_i = 0$ can be considered as equivalent to $k_i=1$ in the previous configuration.
+
+Now, when there exists at least one $k_i > 1$, i.e., $k_i \geq 2$, any other choice will result in a larger denominator than the configuration with $\frac{n!}{1!1!\cdots 1!}$. Therefore, the probability associated with the configuration where all $k_i$ are equal to 1 is the largest.
+
+Hence, the average $(x_1+x_2+\cdots+x_n)/n$ is the most likely and have the probability $\frac{n!}{n^n}$
+
+### (b)
+Stirling's Formula is 
+$$
+n ! \approx \sqrt{2 \pi} n^{n+(1 / 2)} e^{-n}, n \to \infty
+$$
+so
+$$
+\frac{n!}{n^n} \approx  \sqrt{2 \pi} n^{1 / 2} e^{-n} = \frac{ \sqrt{2 n \pi }}{e^n}
+$$
+
+### (c)
+Without loss of generality, let's assume that $x_1$ is the missing value. Using the ball-cell model, this implies that we do not place any balls in cell 1 and randomly distribute $n$ balls among the remaining $n-1$ cells. Each ball has $n-1$ cells to choose from. Therefore, the probability is:
+$$
+\frac{(n-1)^n}{n^n} = \left(1-\frac{1}{n} \right)^n
+$$
+When $n \to \infty$, by $\lim_{x \to 0} (1+x)^{\frac{1}{x}}=e$,
+$$
+\lim_{n \to \infty }\left(1-\frac{1}{n} \right)^n = \lim_{n \to \infty }\frac{1}{ \left(1 + \left(-\frac{1}{n} \right) \right)^{-n}} = e^{-1}
+$$
+
+## Problem 6
+Let $X$ denote the number of correct questions in the 20 questions. It's obvious that
+$$
+X \sim B(20,\frac{1}{4})
+$$
+Therefore
+$$
+P(X\geq 10) = \sum_{i=10}^{20} P(X=i) = \sum_{i=10}^{20} {20\choose i} \left( \frac{1}{4} \right)^i \left( \frac{3}{4} \right)^{20-i} 
+$$
+The answer is
+```{r}
+sum(choose(20, seq(10,20))*(1/4)^(seq(10,20))*(3/4)^(seq(10,0)))
+```
