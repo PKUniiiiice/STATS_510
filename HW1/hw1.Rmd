@@ -246,7 +246,24 @@ Hence, the previous construction satisfies the property of mutually independence
 
 
 ### (c)
+First, we limit the "independent events" to "non-trivial" case, i.e. assuming that distinct events $A_1,A_2,\cdots,A_n$ are mutually independent and $0 < \mathbb{P}(A_i) < 1, \forall i$. So for 
+arbitrary $i,j$, we have
+$$
+\mathbb{P}(A_iA_j) = \mathbb{P}(A_i)\mathbb{P}(A_j)
+$$
+Under uniform probability measure,
+$$
+\frac{|A_iA_j|}{N} = \frac{|A_i|}{N}\cdot \frac{|A_j|}{N} \rightarrow \frac{N}{|A_j|} = \frac{|A_i|}{|A_iA_j|}(*)
+$$
+We require $0 < \mathbb{P}(A_i) < 1, \forall i$, which implies $1\leq |A_i| < N, \forall i$. Note that $N$ is a prime number, so the only factor of $N$ are $1$ and $N$ itself. 
 
+Now, if equation $(*)$ holds, note that $N, |A_i|,|A_j|,|A_iA_j| $ are all integers, $N$ and $|A_j|$ must have common factors other than $1$ and $N$. However, this is impossible when $N$ is a prime number.
+
+Therefore, if we restrict $0 < \mathbb{P}(A_i) < 1, \forall i$, we can't find solution for equation $(*)$. In other words, we can't find $A_1,\cdots,A_n$ that  are mutually independent.
+
+Next, we consider 2 trivial cases: $\mathbb{P}(A_i)=0$ and $\mathbb{P}(A_i)=1$, which correspond to $A_i=\emptyset$ and $A_i=S$, resp. We can choose $A_1=\emptyset, A_2=S$ and $A_3$ as arbitrary event (distinct from $A_1,A_2$) in $\mathcal{A}=2^S$. It's easy to verify that $A_1,A_2,A_3$ are mutually Independent. However, when we introduce a new, distinct $A_4$, as per the previous statement, we can't find $A_3,A_4$ that are independent. In other words, we can't add any event to this group.
+
+In summary, if we require non-trivial case, $S$ can't support any independent events, and if we allow trivial case, $S$ can support at most 3 independent events.
 
 
 ## Problem 3
