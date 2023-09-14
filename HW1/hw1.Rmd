@@ -257,7 +257,7 @@ $$
 $$
 We require $0 < \mathbb{P}(A_i) < 1, \forall i$, which implies $1\leq |A_i| < N, \forall i$. Note that $N$ is a prime number, so the only factor of $N$ are $1$ and $N$ itself. 
 
-Now, if equation $(*)$ holds, note that $N, |A_i|,|A_j|,|A_iA_j| $ are all integers, $N$ and $|A_j|$ must have common factors other than $1$ and $N$. However, this is impossible when $N$ is a prime number.
+Now, if equation $(*)$ holds, note that $N, |A_i|,|A_j|,|A_iA_j|$ are all integers, $N$ and $|A_j|$ must have common factors other than $1$ and $N$. However, this is impossible when $N$ is a prime number.
 
 Therefore, if we restrict $0 < \mathbb{P}(A_i) < 1, \forall i$, we can't find solution for equation $(*)$. In other words, we can't find $A_1,\cdots,A_n$ that  are mutually independent.
 
