@@ -230,7 +230,7 @@ $$
 $$
 
 ### (b)
-Let's examine a random sequence of length $n$, where each digit is either 0 or 1, such as 000111000..., and define the sample space $S$ as the set containing all possible sequences. It's evident that $S$ consists of $N = 2^n$ elements.
+The sample space consists of all integers from $1$ to $N$. Given that N = 2^n, we can uniquely map each outcome $i$ to a binary sequence of length $n$ by using the unsigned binary representation of the number $i-1$ (for example, $000...0$ represents the outcome $\{1\}$, and $111...1$ represents the outcome $\{N\}$). This conversion is one-to-one. Therefore, for the following statement, we consider the sample space as these 0-1 sequences.
 
 We employ the pre-defined probability measure to select a sequence randomly from the sample space. Subsequently, we define the event $A_1$ as follows: "The i-th digit of the drawn sequence is 1".
 $$
