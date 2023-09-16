@@ -25,3 +25,330 @@ knitr::opts_chunk$set(
 ```
 
 ## Problem 1
+### (a)
+cdf of $Y$:
+
+$$
+F_Y(y) = P(Y\leq y) = P(X^2 \leq y) = P(-\sqrt{y} \leq X \leq \sqrt{y})=\int_{-\sqrt{y}}^{\sqrt{y}} f_X(x) dx
+$$
+It's easy to get
+$$
+F_Y(y) = \begin{array}{l}
+          0,\,\,\,\,\,\,y \leq0 \\
+          \sqrt{y}, \,0<y<1\\
+          1, \,\,\,\,\,\,y \geq 1
+          \end{array}
+$$
+Therefore, pdf of $Y$ is
+$$
+f_Y(y) = \frac{1}{2\sqrt{y}} \mathbb{I_{(0,1)}}(y)  
+$$
+
+### (b)
+$Y=-\log X$ is invertible on $0<x<1$.
+$$
+\begin{aligned}
+f_Y(y) &= \left|\frac{dx}{dy} \right|f_X(x) \\
+&= x \frac{(n+m+1)!}{n!m!}x^n(1-x)^m\\
+&=\frac{(n+m+1)!}{n!m!} e^{-(n+1)y}(1-e^{-y})^m, y>0
+\end{aligned}
+$$
+
+### (c)
+$Y= e^X$ is invertible on $x>0$.
+$$
+\begin{aligned}
+f_Y(y) &= \left|\frac{dx}{dy} \right|f_X(x) \\
+&= \frac{1}{\sigma^2} \frac{\log y}{y}  \,e^{-((\log y)/\sigma)^2/2}, y>0
+\end{aligned}
+$$
+
+## Problem 2.6
+### (a)
+Since $X \in \mathbb{R}$, $Y=|X|^3$, we have $Y\geq0$. Note $\{Y=y\}= \{X=y^{1/3}\} \cup\{X=-y^{1/3}\} (y>0)$. So
+$$
+\begin{aligned}
+f_Y(y) &= \frac{1}{3} y^{-\frac{2}{3}} \frac{1}{2}\exp(-y^{\frac{1}{3}}) \times 2\\
+&=\frac{1}{3} y^{-\frac{2}{3}}\exp(-y^{\frac{1}{3}}),y>0
+\end{aligned}
+$$
+As for $Y=0$, it's equivalent to $X=0$, which has prob. 0. So we just take $f_Y(0)=0$. So
+$$
+f_Y(y)=\frac{1}{3} y^{-\frac{2}{3}}\exp(-y^{\frac{1}{3}})\mathbb{I}(y>0)
+$$
+Integral
+$$
+\int_{0}^{+\infty} \frac{1}{3} y^{-\frac{2}{3}}\exp(-y^{\frac{1}{3}}) dy = \int_{0}^{+\infty}\frac{1}{3} t^{-2} e^{-t} \cdot 3t^2dt = \int_{0}^{+\infty} e^{-t} dt = 1
+$$
+
+### (b)
+Note $\{Y=y\}= \{X=\pm \sqrt{1-y}\} (0<y<1)$.
+$$
+\begin{aligned}
+f_Y(y) &=\frac{1}{2\sqrt{1-y}} \frac{3}{8} (\sqrt{1-y}+1)^2 + \frac{1}{2\sqrt{1-y}} \frac{3}{8} (-\sqrt{1-y}+1)^2 \\
+&=\frac{1}{2\sqrt{1-y}} \frac{3}{8} (2(1-y)+2)=\frac{3}{8}\frac{2-y}{\sqrt{1-y}},0<y<1
+\end{aligned}
+$$
+Similarly, take $f_Y(1)=0$.
+
+Integral
+$$
+\int_0^1\frac{3}{8}\frac{2-y}{\sqrt{1-y}} dy = -\int_0^1\frac{3}{8}(t+\frac{1}{t}) (-2tdt)=1
+$$
+
+### (c)
+Note $\{Y=y\}= \{X=-\sqrt{1-y}\} \cup \{X=1-y\} (0<y<1)$.
+$$
+\begin{aligned}
+f_Y(y) &= \frac{1}{2\sqrt{1-y}} \frac{3}{8} (-\sqrt{1-y}+1)^2  + \frac{3}{8} (2-y)^2 \\
+&=\frac{3}{16}\left( \frac{1}{\sqrt{1-y}}+\sqrt{1-y}-2 \right) + \frac{3}{8} (2-y)^2 ,0<y<1
+\end{aligned}
+$$
+Similarly, take $f_Y(1)=0$.
+
+Integral
+$$
+\int_0^1 f_Y(y) = \frac{3}{16} (\frac{8}{3}-2)+\int_0^1\frac{3}{8} (2-y)^2 dy=\frac{1}{8} + \int_{-2}^{-1} \frac{3}{8}t^2dt = 1
+$$
+
+## Problem 3
+### (a)
+1 
+$$
+\lim_{x\to -\infty}F_X(x)=\lim_{x\to -\infty}0=0, \lim_{x\to +\infty}F_X(x) = 1- \lim_{x\to +\infty}e^{-x}=1-0=1
+$$
+2
+
+$e^{-x}$ is decreasing over $x\geq0$, so $1-e^{-x}$ is increasing over $x\geq0$. Moreover, $\forall x\geq0, 1-e^{-x}\geq0$. Therefore, $F_X(x)$ is a non-decreasing function of $x$.
+
+3
+
+$F_X(x)$ is continuous over $x<0$ and $x>0$. We only need to check $x=0$.
+$$
+\lim_{x \to 0+} F_X(x) = \lim_{x \to 0+} 1-e^{-x} = 0 = F_X(0)
+$$
+
+By 1,2,3, $F_X(x)$ is a cdf.    
+
+Inverse of cdf:     
+When $y=0$, $F_X^{-1}(0) = \inf \{x: F_X(x) \geq 0\} = -\infty$.       
+When $0<y<1$, $F_X(x)$ is strictly increasing w.r.p $x$, so $F_X^{-1}(y) = -\log(1-y)$.      
+When $y=1$, as $F_X(x)<1,\forall x$, $F_X^{-1}(1)=+\infty$.      
+
+### (b)
+1
+$$
+\lim_{x\to -\infty}F_X(x)=\lim_{x\to -\infty}\frac{e^x}{2}=0, \lim_{x\to +\infty}F_X(x) = 1- \lim_{x\to +\infty}\frac{e^{1-x}}{2}=1-0=1
+$$
+2
+
+$\frac{e^x}{2}$ is increasing over $x<0$ and $\frac{e^x}{2}<\frac{1}{2}, \forall x<0$.      
+$e^{1-x}$ is decreasing over $x \geq 1$, so $1-(e^{1-x}/2)$ is increasing over $x \geq 1$. Moreover,
+$e^{1-x} \leq e^{1-1}=1 \rightarrow 1-(e^{1-x}/2) \geq \frac{1}{2}, \forall x \geq 1$.      
+Therefore, $F_X(x)$ is a non-decreasing function of $x$.   
+
+3
+
+We check $x=0$ and $x=1$.
+$$
+\lim_{x \to 0+} F_X(x) = \lim_{x \to 0+} \frac{1}{2} = \frac{1}{2} = F_X(0)
+$$$$
+\lim_{x \to 1+} F_X(x) = \lim_{x \to 1+} 1-\frac{e^{1-x}}{2} = \frac{1}{2} = F_X(1)
+$$
+By 1,2,3, $F_X(x)$ is a cdf.
+
+Inverse of cdf:     
+When $y=0$, $F_X^{-1}(0) = \inf \{x: F_X(x) \geq 0\} = -\infty$.       
+When $0<y<\frac{1}{2}$, $F_X(x)$ is strictly increasing w.r.p $x$, so $F_X^{-1}(y) = \log(2y)$.     
+When $y=\frac{1}{2}$, $F_X^{-1}(1/2) = \inf \{x: F_X(x) \geq 1/2\} = 0$.     
+When $\frac{1}{2}<y<1$, $F_X(x)$ is strictly increasing w.r.p $x$, so $F_X^{-1}(y) =1- \log(2-2y)$.      
+When $y=1$, as $F_X(x)<1,\forall x$, $F_X^{-1}(1)=+\infty$.    
+
+### (c)
+1
+$$
+\lim_{x\to -\infty}F_X(x)=\lim_{x\to -\infty}\frac{e^x}{4}=0, \lim_{x\to +\infty}F_X(x) = 1- \lim_{x\to +\infty}\frac{e^{-x}}{4}=1-0=1
+$$
+2
+
+$e^x/4$ is increasing over $x<0$ and $e^x/4<1/4, \forall x<0$.      
+$1-(e^{-x}/4)$ is increasing over $x\geq 0$ and $1-(e^{-x}/4)\geq 3/4 >1/4,  \forall x\geq 0$.    
+Therefore, $F_X(x)$ is a non-decreasing function of $x$.
+
+3
+
+We check $x=0$.
+$$
+\lim_{x \to 0+} F_X(x) = 1- \lim_{x \to 0+} \frac{e^{-x}}{4} = \frac{3}{4} = F_X(0)
+$$
+By 1,2,3, $F_X(x)$ is a cdf.  
+
+Inverse of cdf:     
+When $y=0$, $F_X^{-1}(0) = \inf \{x: F_X(x) \geq 0\} = -\infty$.       
+When $0<y<\frac{1}{4}$, $F_X(x)$ is strictly increasing w.r.p $x$, so $F_X^{-1}(y) = \log(4y)$.     
+When $\frac{1}{4} \leq y < \frac{3}{4}$, $F_X^{-1}(1/2) = \inf \{x: F_X(x) \geq 1/2\} = 0$.     
+When $\frac{3}{4} \leq y<1$, $F_X(x)$ is strictly increasing w.r.p $x$, so $F_X^{-1}(y) =- \log(4-4y)$.     
+When $y=1$, as $F_X(x)<1,\forall x$, $F_X^{-1}(1)=+\infty$.   
+
+## Problem 4
+### (a)
+$$
+\begin{aligned}
+EX^2 &= \int_\mathbb{R} x^2 \frac{1}{\sqrt{2\pi}}e^{-x^2/2} dx\\
+&= \frac{2}{\sqrt{\pi}} \int_\mathbb{R} \frac{x^2}{2} e^{-x^2/2} d\left(\frac{x}{\sqrt{2}}\right) \\
+&=\frac{2}{\sqrt{\pi}} \int_\mathbb{R} t(te^{-t^2}) dt \\
+&=\frac{2}{\sqrt{\pi}} \left[ \left. t\frac{-e^{-t^2}}{2} \right|_{-\infty}^{+\infty}  - \int_\mathbb{R} \frac{-e^{-t^2}}{2} dt    \right] \\
+&=\frac{2}{\sqrt{\pi}} \left( 0+\frac{1}{2} \int_\mathbb{R} e^{-t^2} dx \right) \\
+&=\frac{2}{\sqrt{\pi}}  \frac{\sqrt{\pi}}{2}\\
+&=1
+\end{aligned}
+$$
+
+By Example 2.1.7
+$$
+f_Y(y)=\frac{1}{2 \sqrt{y}}\left[\frac{1}{\sqrt{2 \pi}} e^{\frac{-y}{2}}+\frac{1}{\sqrt{2 \pi}} e^{\frac{-y}{2}}\right]=\frac{1}{\sqrt{2 \pi y}} e^{\frac{-y}{2}} 
+$$
+so
+$$
+\begin{aligned}
+EY &= \int_0^{+\infty} y \frac{1}{\sqrt{2 \pi y}} e^{\frac{-y}{2}} dy \\
+&=  \frac{1}{\sqrt{2 \pi }}   \int_0^{+\infty} y^{\frac{1}{2}} e^{\frac{-y}{2}} dy\\
+&=\frac{2\sqrt{2}}{\sqrt{2 \pi }}   \int_0^{+\infty} t^{\frac{1}{2}} e^{-t} dt\\
+&= \frac{2}{\sqrt{ \pi }} \Gamma(\frac{3}{2})\\
+&=\frac{2}{\sqrt{ \pi }} \frac{1}{2}\Gamma(\frac{1}{2}) = 1
+\end{aligned}
+$$
+### (b)
+$\{Y=y\}=\{X=\pm y\}$, so
+$$
+f_Y(y) = \frac{2}{\sqrt{2\pi}} e^{-\frac{y^2}{2}}, y\geq0
+$$
+Mean
+$$
+EY = \int_0^{+\infty} y \frac{2}{\sqrt{2\pi}} e^{-\frac{y^2}{2}} dy = \sqrt{\frac{2}{\pi}} \int_0^{+\infty} e^{-t} dt = \sqrt{\frac{2}{\pi}}
+$$
+Variance
+$$
+\begin{aligned}
+EY^2 &= \int_0^{+\infty} y^2 \frac{2}{\sqrt{2\pi}} e^{-\frac{y^2}{2}} dy \\
+&= \sqrt{\frac{2}{\pi}} \int_0^{+\infty} 2t\, e^{-t} (2t)^{-1/2}dt \\
+&= 2\sqrt{\frac{1}{\pi}}\int_0^{+\infty} t^{1/2}\, e^{-t} dt \\
+&=2\sqrt{\frac{1}{\pi}} \Gamma(\frac{3}{2})=1
+\end{aligned}
+$$
+Therefore
+$$
+Var(Y) = EY^2-(EY)^2=1-\frac{2}{\pi}
+$$
+
+## Problem 5
+### (a)
+2.14 (a)
+
+We use Fubini theorem.
+$$
+\begin{aligned}
+\int_0^{+\infty}[1-F_X(x)]dx &= \int_0^{+\infty}\left[\int_{-\infty}^{+\infty} f(t)dt-\int_{-\infty}^x f(t) dt\right]dx\\
+&= \int_0^{+\infty}\left[\int_{x}^{+\infty} f(t)dt\right]dx\\
+&= \int_0^{+\infty}\left[\int_{0}^{t} f(t)dx\right]dt\\
+&=\int_0^{+\infty}f(t)\left[\int_{0}^{t} 1dx\right]dt\\
+&=\int_0^{+\infty}tf(t)dt\\
+&=EX
+\end{aligned}
+$$
+
+2.14 (b)
+
+$$
+\begin{aligned}
+\sum_{k=0}^{\infty}\left(1-F_X(k)\right) &= \sum_{k=0}^{\infty}P(X>k) \\
+&= \sum_{k=0}^{\infty}\sum_{t=k+1}^{\infty} P(X=t)\\
+&=\sum_{t=1}^{\infty}\sum_{k=1}^{t} P(X=t)  \,\,\,(\text{change order of double summation})\\
+&=\sum_{t=1} t  P(X=t) \\
+&=EX
+\end{aligned}
+$$
+
+Compare:       
+Obviously, Part (b) is a discrete version of the conclusion in Part (a).
+
+### (b)
+Mean duration is expectation of $T$.
+$$
+\begin{aligned}
+ET &= \int_0^{+\infty}[1-F_T(t)]dt \\
+&=\int_0^{+\infty}P(T>t)dt\\
+&=\int_0^{+\infty}ae^{-\lambda t}+(1-a)e^{-\mu t}dt \\
+&= \frac{-a e^{-\lambda t}}{\lambda}-\left.\frac{(1-a) e^{-\mu t}}{\mu}\right|_0 ^{\infty}\\
+&=\frac{a}{\lambda}+\frac{1-a}{\mu}
+\end{aligned}
+$$
+
+## Problem 6
+### (a)
+We use law of total expectation.
+$$
+\begin{aligned}
+LHS &=  E((|X-Y|)|X\geq Y)P(X\geq Y) + E((|X-Y|)|X <  Y)P(X < Y) \\
+&= E(X-Y|X\geq Y)P(X\geq Y) + E(Y-X)|X <  Y)P(X < Y) 
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+RHS &= E(X)+E(Y)-2\left(  E(X \wedge Y|X\geq Y)P(X\geq Y) +  E(X \wedge Y|X< Y)P(X< Y)    \right) \\
+&= E(X)+E(Y)-2\left(  E(Y|X\geq Y)P(X\geq Y) +  E(X|X< Y)P(X< Y)    \right) \\
+&=  E(X|X\geq Y)P(X\geq Y)- E(X|X< Y)P(X< Y) \\
+&\,\,\,\,\,\,+E(Y|X< Y)P(X< Y) -  E(Y|X\geq Y)P(X\geq Y) \\
+&= E(X-Y|X\geq Y)P(X\geq Y) + E(Y-X)|X <  Y)P(X < Y)\\
+&=LHS
+\end{aligned}
+$$
+
+### (b)
+$$
+\begin{aligned}
+E(|X-a|) &= \int_{-\infty}^{+\infty} |x-a|f(x)dx\\
+&=\int_{-\infty}^{+a} (a-x)f(x)dx + \int_{a}^{+\infty} (x-a)f(x) dx\\
+&=aF(a)-\int_{-\infty}^{+a} xf(x)dx + \int_{a}^{+\infty} xf(x) dx - a(1-F(a))\\
+&=2aF(a)-a-\int_{-\infty}^{+a} xf(x)dx + \int_{a}^{+\infty} xf(x) dx
+\end{aligned}
+$$
+We take derivative of $E(|X-a|)$ w.r.t $a$ and set it to zero.
+$$
+\begin{aligned}
+\frac{dE(|X-a|) }{da} &=2F(a)+2af(a) -1 -af(a) -af(a) = 0
+\end{aligned}
+$$
+We get $a=m$ where $F(m)=\frac{1}{2}$, i.e. $P(X\leq m)=\frac{1}{2}$. Furthermore, the second derivative is
+$$
+\begin{aligned}
+\frac{d^2E(|X-a|) }{da^2} &=2f(a) > 0
+\end{aligned}
+$$
+therefore $a=m$ can minimize $E|X-a|$.
+
+### (c)
+$$
+\begin{aligned}
+E(\alpha(X-c)_- + \beta(X-c)_+) &= E(\alpha(c-X \wedge c) + \beta (X-X \wedge c)) \\
+&=E(\alpha c+\beta X -(\alpha+\beta)(X \wedge c)) \\
+&=\alpha c + \beta \int_{-\infty}^{+\infty} x f(x)dx - (\alpha+\beta) \left( \int_{-\infty}^{c} xf(x)dx + c\int_{c}^{+\infty} f(x)dx    \right)
+\end{aligned}
+$$
+We take derivative w.r.t $c$ and set it to zero.
+$$
+\begin{aligned}
+\frac{d E(\alpha(X-c)_- + \beta(X-c)_+)}{dc} &= \alpha -(\alpha+\beta) (cf(c) + c(-f(c)) + (1-F(c)))\\
+&=\alpha - (\alpha+\beta)(1-F(c)))\\
+&=0
+\end{aligned}
+$$
+We get $c=c_p$ where $F(c_p)=p=\frac{\beta}{\alpha+\beta}$, i.e. $P(X\leq c_p)=\frac{\beta}{\alpha+\beta}$. Furthermore, the second derivative is
+$$
+\begin{aligned}
+\frac{d^2 E(\alpha(X-c)_- + \beta(X-c)_+)}{dc^2} 
+&=(\alpha+\beta)f(c)>0
+\end{aligned}
+$$
+therefore $c=c_p$ can minimize $E(\alpha(X-c)_- + \beta(X-c)_+)$.
