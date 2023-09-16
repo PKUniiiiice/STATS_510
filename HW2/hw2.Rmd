@@ -1,0 +1,27 @@
+---
+title: "STATS 510 HW2"
+author: "Minxuan Chen"
+date: "2023/9/16"
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    fig_width: 6
+    fig_height: 5
+  html_document:
+    fig_width: 6
+    toc_depth: 4
+  word_document:
+    toc_depth: '4'
+fontsize: 12pt
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = TRUE,
+	warning = TRUE
+)
+```
+
+## Problem 1
