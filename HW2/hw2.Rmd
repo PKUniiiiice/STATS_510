@@ -41,7 +41,7 @@ F_Y(y) = \begin{array}{l}
 $$
 Therefore, pdf of $Y$ is
 $$
-f_Y(y) = \frac{1}{2\sqrt{y}} \mathbb{I_{(0,1)}}(y)  
+f_Y(y) = \frac{1}{2\sqrt{y}} \mathbb{I}_{(0,1)}(y)  
 $$
 
 ### (b)
@@ -218,6 +218,7 @@ EY &= \int_0^{+\infty} y \frac{1}{\sqrt{2 \pi y}} e^{\frac{-y}{2}} dy \\
 &=\frac{2}{\sqrt{ \pi }} \frac{1}{2}\Gamma(\frac{1}{2}) = 1
 \end{aligned}
 $$
+
 ### (b)
 $\{Y=y\}=\{X=\pm y\}$, so
 $$
@@ -293,7 +294,6 @@ LHS &=  E((|X-Y|)|X\geq Y)P(X\geq Y) + E((|X-Y|)|X <  Y)P(X < Y) \\
 &= E(X-Y|X\geq Y)P(X\geq Y) + E(Y-X)|X <  Y)P(X < Y) 
 \end{aligned}
 $$
-
 $$
 \begin{aligned}
 RHS &= E(X)+E(Y)-2\left(  E(X \wedge Y|X\geq Y)P(X\geq Y) +  E(X \wedge Y|X< Y)P(X< Y)    \right) \\
