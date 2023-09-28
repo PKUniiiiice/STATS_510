@@ -1,0 +1,74 @@
+---
+title: "STATS 510 HW3"
+author: "Minxuan Chen"
+date: "2023/9/27"
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    fig_width: 6
+    fig_height: 5
+  html_document:
+    fig_width: 6
+    toc_depth: 4
+  word_document:
+    toc_depth: '4'
+fontsize: 12pt
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = TRUE,
+	warning = TRUE
+)
+```
+
+## Problem 1
+We calculate $\bar{\Phi}(z) \frac{z}{\phi(z)}$.
+$$
+\begin{aligned}
+\bar{\Phi}(z) \frac{z}{\phi(z)} 
+& =\int_z^{\infty} z e^{-x^2 / 2+z^2 / 2} d x=\int_z^{\infty} z e^{-(x-z)(x+z) / 2} d x \\
+& =\int_0^{\infty} z e^{-u(u+2 z) / 2} d u\quad (\text{take } u=x-z)\\
+& = \int_0^{\infty} z e^{-t} \frac{t}{\sqrt{2 t+z^2}} dt \quad (\text{take } u(u+2z)=2t)\\
+& = \int_0^{\infty} \frac{1}{m} e^{-t} \frac{t}{\sqrt{2 t+1/m^2}} dt \quad (\text{take } z=\frac{1}{m})\\ 
+& = \int_0^{\infty}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt 
+\end{aligned}
+$$
+We define
+$$
+h(m,t) =  \left\{
+\begin{array}{r} e^{-t} \frac{t}{\sqrt{2 t m^2+1}}, &t\geq0\\
+0, &t<0
+\end{array}   \right.
+
+$$
+It's obvious that, $\forall m,t \in \mathbb{R}$
+$$
+|h(m,t)| \leq g(t) = te^{-t}\mathbb{I}(t\geq0)
+$$
+and
+$$
+\int_{-\infty}^{+\infty} g(t) < \infty
+$$
+Therefore, by Dominated Convergence Theorem
+$$
+\begin{aligned}
+\lim_{z \to +\infty} \bar{\Phi}(z) \frac{z}{\phi(z)}  &= \lim_{m \to 0} \int_0^{\infty}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt  \\
+&= \int_0^{\infty} \lim_{m \to 0}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt  \\
+&=\int_0^{\infty}te^{-t} dt\\
+&=1
+\end{aligned}
+$$
+Therefore,
+$$
+\bar{\Phi}(z) \sim \frac{\phi(z)}{z}, \quad \text { as } z \rightarrow \infty
+$$
+
+## Problem 2
+
+
+
+
+
