@@ -31,22 +31,22 @@ $$
 \bar{\Phi}(z) \frac{z}{\phi(z)} 
 & =\int_z^{\infty} z e^{-x^2 / 2+z^2 / 2} d x=\int_z^{\infty} z e^{-(x-z)(x+z) / 2} d x \\
 & =\int_0^{\infty} z e^{-u(u+2 z) / 2} d u\quad (\text{take } u=x-z)\\
-& = \int_0^{\infty} z e^{-t} \frac{t}{\sqrt{2 t+z^2}} dt \quad (\text{take } u(u+2z)=2t)\\
-& = \int_0^{\infty} \frac{1}{m} e^{-t} \frac{t}{\sqrt{2 t+1/m^2}} dt \quad (\text{take } z=\frac{1}{m})\\ 
-& = \int_0^{\infty}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt 
+& = \int_0^{\infty} z e^{-t} \frac{1}{\sqrt{2 t+z^2}} dt \quad (\text{take } u(u+2z)=2t)\\
+& = \int_0^{\infty} \frac{1}{m} e^{-t} \frac{1}{\sqrt{2 t+1/m^2}} dt \quad (\text{take } z=\frac{1}{m})\\ 
+& = \int_0^{\infty}  e^{-t} \frac{1}{\sqrt{2 t m^2+1}} dt 
 \end{aligned}
 $$
 We define
 $$
 h(m,t) =  \left\{
-\begin{array}{r} e^{-t} \frac{t}{\sqrt{2 t m^2+1}}, &t\geq0\\
+\begin{array}{r} e^{-t} \frac{1}{\sqrt{2 t m^2+1}}, &t\geq0\\
 0, &t<0
 \end{array}   \right.
 
 $$
 It's obvious that, $\forall m,t \in \mathbb{R}$
 $$
-|h(m,t)| \leq g(t) = te^{-t}\mathbb{I}(t\geq0)
+|h(m,t)| \leq g(t) = e^{-t}\mathbb{I}(t\geq0)
 $$
 and
 $$
@@ -55,9 +55,9 @@ $$
 Therefore, by Dominated Convergence Theorem
 $$
 \begin{aligned}
-\lim_{z \to +\infty} \bar{\Phi}(z) \frac{z}{\phi(z)}  &= \lim_{m \to 0} \int_0^{\infty}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt  \\
-&= \int_0^{\infty} \lim_{m \to 0}  e^{-t} \frac{t}{\sqrt{2 t m^2+1}} dt  \\
-&=\int_0^{\infty}te^{-t} dt\\
+\lim_{z \to +\infty} \bar{\Phi}(z) \frac{z}{\phi(z)}  &= \lim_{m \to 0} \int_0^{\infty}  e^{-t} \frac{1}{\sqrt{2 t m^2+1}} dt  \\
+&= \int_0^{\infty} \lim_{m \to 0}  e^{-t} \frac{1}{\sqrt{2 t m^2+1}} dt  \\
+&=\int_0^{\infty}e^{-t} dt\\
 &=1
 \end{aligned}
 $$
@@ -67,8 +67,279 @@ $$
 $$
 
 ## Problem 2
+### (a)
+Consider the moment generating function of $Z$
+$$
+\begin{aligned}
+M_Z(t) &= \mathbb{E}(e^{tz}) = \int_{\mathbb{R}} e^{tz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz \\
+& =\int_{\mathbb{R}} e^{t^2/2} \frac{1}{\sqrt{2\pi}} e^{-(z^2-2tz+t^2)/2} dz \\
+&= e^{t^2/2} \int_{\mathbb{R}}  \frac{1}{\sqrt{2\pi}} e^{-(z-t)^2/2} dz \\
+&= e^{t^2/2}
+\end{aligned}
+$$
+Therefore, by the property of moment generating function
+$$
+\begin{aligned}
+E(Z^{2n}) &= \left[ \frac{d^{2n}}{dt^{2n}}\Big(  e^{t^2/2} \Big) \right]_{t=0} \\
+&=\left[ \frac{d^{2n}}{dt^{2n}}\left( \sum_{k=0}^{\infty} \frac{(t/\sqrt{2})^{2 k}}{k !} \right)\right]_{t=0} \\
+&=\left[ \sum_{k=0}^{\infty} 2^{-k} \frac{d^{2n}}{dt^{2n}}\left( \frac{t^{2 k}}{k !} \right)\right]_{t=0} \\
+&=2^{-n}\cdot2n(2n-1)\cdots1/k!\\
+&=\frac{2^{-n}(2n)!}{n!}, n=1,2,\cdots
+\end{aligned}
+$$
+The commutativity of derivative and infinite sum is assured by the consistent convergence of power series.
+
+### (b)
+$$
+f(x) = 2\times \left|\frac{dz}{dx} \right|   \frac{1}{\sqrt{2\pi}} e^{-z^2/2} = \frac{1}{\sqrt{2\pi x}} e^{-x/2} \mathbb{I}(x>0)
+$$
+
+### (c)
+We have
+$$
+\begin{aligned}
+\mathbb{P}[X \leq x_p] = \mathbb{P}[|Z| \leq x_p] = \mathbb{P}[-x_p \leq Z  \leq x_p]=p \in (0,1)
+\end{aligned}
+$$
+The last term is because $p>0$ is known, so we are sure about $x_p>0$, otherwise we must have $p=0$. Note that $\mathcal{N}(0,1)$ is symmetric over $x=0$, so
+$$
+\begin{aligned}
+&\mathbb{P}[-x_p \leq Z  \leq x_p] = \Phi(x_p)-\Phi(-x_p) = 2\Phi(x_p)-1=p\\
+\rightarrow\,\, & \mathbb{P}[Z  \leq x_p] = \Phi(x_p)=\frac{p+1}{2}
+\end{aligned}
+$$
+
+## Problem 3
+Let $\bar{F}(x) = 1-F(x)=\mathbb{P}(X>x)$, then
+$$
+\begin{aligned}
+\mathbb{P}(X-t>s|X>t) &= \frac{\mathbb{P}(X-t>s,X>s)}{\mathbb{P}(X>t)}\\
+&= \frac{\bar{F}(t+s)}{\bar{F}(t)}\\
+&= \mathbb{P}(X>s) = \bar{F}(s)
+\end{aligned}
+$$
+i.e.
+$$
+ \bar{F}(t+s) = \bar{F}(t)\bar{F}(s), \,\forall\,t,s>0
+$$
 
 
 
+So for all integer $m,n \geq 1$ and all positive real number $t$, we have
+$$
+\begin{aligned}
+&\bar{F}(mt) =
+\bar{F}(n\times\frac{m}{n}t)=\left(\bar{F}(\frac{m}{n}t) \right)^n\\
+&\bar{F}(mt) = \bar{F}(t+t+\cdots+t) = \left( \bar{F}(t) \right)^m
+\end{aligned}
+$$
+then
+$$
+\bar{F}\left(\frac{m}{n}t\right)  = \left( \bar{F}(t) \right)^{\frac{m}{n}}
+$$
+Note that here $\frac{m}{n}$ is a positive rational number, it's known that for any real number, there exists some rational sequence that converges to it ref:( [click](http://mathonline.wikidot.com/constructing-rational-irrational-sequences-which-converge-to)). Therefore, we can construct $m/n$ to be such convergent rational sequence, i.e. we have
+$$
+\lim_{n \to +\infty} x_n = x,
+$$
+in which $x_n$ is a positive rational number and $x>0$. By continuity of CDF $F(x)$ and further $\bar{F}(x)$, we take $n\to +infty$ at both sides of the equation above
+$$
+\begin{aligned}
+\lim_{n \to +\infty} \bar{F}\left(x_nt\right) &=   \bar{F}\left(\lim_{n \to +\infty}x_nt\right) = \bar{F}\left(xt\right) \\
+&= \lim_{n \to +\infty} \left( \bar{F}(t) \right)^{x_n} = \bar{F}\left(t\right)^x
+\end{aligned}
+$$
+thus, for all $x>0, t>0$
+$$
+\bar{F}\left(xt\right) = \bar{F}\left(t\right)^x
+$$
+Take $t=1$, and let $\lambda = -\ln \bar{F}(1)$
+$$
+\begin{aligned}
+\bar{F}\left(x\right) = \bar{F}\left(1\right)^x = e^{\ln \bar{F}(1)\cdot x} = e^{-\lambda x}, x>0
+\end{aligned}
+$$
+Hence
+$$
+F(x) = 1-e^{-\lambda x}, x>0,\lambda = -\ln (1-F(1))
+$$
+For $x\leq0$, it's given that X is a positive r.v., so $F(x)=0, \text{ when } x\leq0$.      
+It's clear that $X$ follows exponential distribution.
+
+<!--
+Now consider
+$$
+\lim_{h\to 0} \frac{\bar{F}(t+h)-\bar{F}(h)}{h} = \lim_{h\to 0} \bar{F}(t)  \frac{\bar{F}(h)-1}{h} = \bar{F}(t) \lim_{h\to 0}\frac{\bar{F}(h)-1}{h}
+$$
+-->
+
+## Problem 4
+### (a)
+Suppose there are $n$ indistinguishable balls (i.e. identical) to be placed into $k$ distinguishable cells (i.e. numbered 1 to $k$) without any restriction (i.e. any number of balls can be placed into a cell).    
+It's known that the total ways of distribution is
+$$
+n+k-1\choose{k-1}
+$$
+
+We can also place the balls in two steps. First, we place $i, 0\leq i\leq n$ balls into the first cell. Then, for the rest $n-i$ balls, we place them into the rest $k-2$ cells as before. So the total ways of distribution is
+$$
+\sum_{i=0}^n  {n-i+k-2\choose{k-2}}
+$$
+These two value should be equal,
+$$
+{n+k-1\choose{k-1}} = \sum_{i=0}^n  {n-i+k-2\choose{k-2}}
+$$
+Now, we substitute $n\to n-r$, $k\to r+2$, then
+$$
+{n+1\choose{r+1}} = \sum_{i=0}^{n-r}  {n-i\choose{r}} = \sum_{i=r}^{n}  {i\choose{r}}
+$$
+
+Take $r=2$,
+$$
+\begin{aligned}
+&{n+1\choose{r+1}} = \frac{(n+1)n(n-1)}{6} = \sum_{i=r}^{n}{i\choose{r}} =\sum_{i=2}^n \frac{i(i-1)}{2} \\
+\end{aligned}
+$$
+$$
+\begin{aligned}
+\sum_{i=1}^n i^2 &= 1+2\sum_{i=2}^n \frac{i(i-1)}{2}+\sum_{i=2}^n i\\
+&=1 + \frac{(n+1)2n(n-1)}{6} + \frac{(2+n)(n-1)}{2}\\
+&=\frac{n(2n^2+3n+1)}{6} = \frac{n(n+1)(2n+1)}{6}
+\end{aligned}
+$$
+
+### (b)
+a\.     
+$$
+\begin{aligned}
+&EX = \int_0^1x\cdot ax^{a-1}dx = \int_0^1 ax^{a} dx = \left.\frac{ax^{a+1}}{a+1}\right|_0^1 = \frac{a}{a+1}\\
+&EX^2 = \int_0^1x^2\cdot ax^{a-1}dx = \int_0^1 ax^{a+1} dx = \left.\frac{ax^{a+2}}{a+2}\right|_0^1 = \frac{a}{a+2}\\
+&Var(X) = EX^2 -(EX)^2 = \frac{a}{(a+1)^2(a+2)}
+\end{aligned}
+$$
+
+b\.      
+$$
+\begin{aligned}
+&EX = \sum_{x=1}^n x \frac{1}{n} = \frac{1}{n} \frac{n(n+1)}{2}=\frac{n+1}{2}\\
+&EX^2 = \sum_{x=1}^n x^2 \frac{1}{n} =\frac{1}{n}\frac{n(n+1)(2n+1)}{6} = \frac{(n+1)(2n+1)}{6}\\
+&Var(X) = EX^2 -(EX)^2 = \frac{2n^2+3n+1}{6}-\frac{n^2+2n+1}{4} = \frac{n^2+1}{12}
+\end{aligned}
+$$
+
+c\.    
+$$
+\begin{aligned}
+& E X=\int_0^2 x \cdot \frac{3}{2}(x-1)^2 d x=\frac{3}{2} \int_0^2\left(x^3-2 x^2+x\right) d x=1 \\
+& E X^2=\int_0^2 x^2 \cdot \frac{3}{2}(x-1)^2 d x=\frac{3}{2} \int_0^2\left(x^4-2 x^3+x^2\right) d x=\frac{8}{5} \\
+& Var(X)= EX^2 -(EX)^2 =\frac{8}{5}-1=\frac{3}{5}
+\end{aligned}
+$$
+
+## Problem 5
+### (a)
+$$
+E\left(e^{t X}\right)=\int_0^c e^{t x} \frac{1}{c} d x=\left.\frac{1}{c t} e^{t x}\right|_0 ^c=\frac{1}{c t}\left(e^{t c}-1\right)
+$$
+
+### (b)
+$$
+E(e^{tX}) = \int_0^c e^{tx}\frac{2x}{c^2}dx = \frac{2}{c^2} \int_0^c xe^{tx}dx 
+= \left.\frac{2xe^{tx}}{c^2}\right|_0^c-\frac{2}{c^2} \int_0^c e^{tx}dx  = \frac{2(1-e^{ct}+cte^{ct})}{c^2t^2}
+$$
+
+### (c)
+$$
+\begin{aligned}
+E(e^{tX}) & = \frac{1}{2\beta}\left(  \int_{-\infty}^\alpha  e^{tx} e^{(x-\alpha)/\beta}  dx+ \int_\alpha^{+\infty} e^{tx}e^{-(x-\alpha)/\beta} dx \right) \\
+&=\frac{1}{2\beta}  \left( \left.    
+\frac{e^{\frac{x-\alpha+t x \beta}{\beta}} \beta}{1+t\beta}
+  \right|_{-\infty}^\alpha +  \left.    
+\frac{e^{\frac{-x+\alpha+t x \beta}{\beta}} \beta}{-1+t\beta}
+  \right|_\alpha^{+\infty}  \right)\\
+&=\frac{1}{2\beta}  \left(   
+\frac{e^{t\alpha} \beta}{1+t\beta}+   
+\frac{e^{t \alpha} \beta}{1-t\beta} \right)\\
+&=\frac{e^{t\alpha}}{2\beta} \frac{2\beta}{1-t^2\beta^2} \\
+&=\frac{e^{t\alpha}}{1-t^2\beta^2}, -\frac{1}{\beta} < t< \frac{1}{\beta}
+\end{aligned}
+$$
+
+### (d)
+$$
+\begin{aligned}
+E(e^{tX}) & = \sum_{x=0}^{+\infty} e^{tx} {{r+x-1}\choose x} p^r(1-p)^x \\
+&= \left(\frac{p}{1-e^t+pe^t}\right)^r \sum_{x=0}^{+\infty}{{r+x-1}\choose x}(1-e^t+pe^t)^r (1-(1-e^t+pe^t))^x\\
+&=\left(\frac{p}{1-e^t+pe^t}\right)^r , t < -\ln(1-p)
+\end{aligned}
+$$
+The last equal sign is because we treat $1-e^t+pe^t$ as the parameter of negative binomial distribution and use the normalization of PMF.
+
+### (e) 2.31
+By the definition of MGF, no matter what distribution $X$ is, we must have
+$$
+M_X(0) = E(e^{0X}) = E(1)=1
+$$
+However, in $M_X(t)=t/(t-1)$, $M_X(0)=0$. Therefore, $M_X(t)$ can't be an MGF and such distribution doesn't exist.
+
+## Problem 6
+Leibniz integral rule tells that
+$$
+\begin{aligned}
+& \frac{d}{d x}\left(\int_{a(x)}^{b(x)} f(x, t) d t\right) \\
+= & f(x, b(x)) \cdot \frac{d}{d x} b(x)-f(x, a(x)) \cdot \frac{d}{d x} a(x)+\int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) d t
+\end{aligned}
+$$
+We use it for this problem.
+
+### (a)
+$$
+\frac{d}{dx}\int_0^x e^{-\lambda t} dt =  e^{-\lambda x}
+$$
+
+### (b)
+$$
+\frac{d}{d\lambda}\int_0^{+\infty} e^{-\lambda t} dt = \int_0^{+\infty} \frac{\partial}{\partial \lambda} 
+  e^{-\lambda t} dt =  \int_0^{+\infty} -te^{-\lambda t} dt = -\frac{1}{\lambda^2}
+$$
+
+### (c)
+$$
+\frac{d}{dt} \int_t^1 \frac{1}{x^2} dx = -\frac{1}{t^2}
+$$
+
+### (d)
+$$
+\begin{aligned}
+\frac{d}{dt} \int_1^{+\infty} \frac{1}{(x-t)^2} dx &=  + \int_1^{+\infty} \frac{\partial}{\partial t} \frac{1}{(x-t)^2}dx \\
+&= \int_1^{+\infty} \frac{2}{(x-t)^3}dx\\
+&=  \left. -\frac{1}{(x-t)^2}\right|_1^{+\infty} \\
+&=\frac{1}{(1-t)^2}
+\end{aligned}
+$$
+
+Justify:
+
+Leibniz integral rule requires that $f(x,t)$ and its partial derivative are both continuous. All integrands are elementary functions, so they are continuous. This rule also requires that the upper and lower limit are also continuous, which is satisfied. Therefore, we can use Leibniz integral rule.
+
+We can also verify by directly calculation.
+(a)   
+$$\frac{d}{dx}\left(\int_0^x e^{-\lambda t} dt\right) =\frac{d}{dx} \left( -\frac{1}{\lambda}e^{-\lambda x} + \frac{1}{\lambda}    \right) = e^{-\lambda x}
+
+$$
+
+(b)   
+$$
+\frac{d}{d \lambda} \int_0^{\infty} e^{-\lambda t} d t=\frac{d}{d \lambda} \frac{1}{\lambda}=-\frac{1}{\lambda^2}
+$$
+
+(c)  
+$$
+\frac{d}{d t}\left(\int_t^1 \frac{1}{x^2} d x\right)=\frac{d}{d t}\left(-1+\frac{1}{t}\right)=-\frac{1}{t^2}
+$$
+
+(d)   
+$$
+\frac{d}{d t} \int_1^{\infty}(x-t)^{-2} d x=\frac{d}{d t}\left(-\left.(x-t)^{-1}\right|_1 ^{\infty}\right)=\frac{d}{d t} \frac{1}{1-t}=\frac{1}{(1-t)^2}
+$$
 
 
