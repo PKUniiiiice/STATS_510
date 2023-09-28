@@ -37,12 +37,12 @@ $$
 \end{aligned}
 $$
 We define
+
 $$
 h(m,t) =  \left\{
-\begin{array}{r} e^{-t} \frac{1}{\sqrt{2 t m^2+1}}, &t\geq0\\
+\begin{array}{rr} e^{-t} \frac{1}{\sqrt{2 t m^2+1}}, &t\geq0\\
 0, &t<0
 \end{array}   \right.
-
 $$
 It's obvious that, $\forall m,t \in \mathbb{R}$
 $$
@@ -77,7 +77,7 @@ M_Z(t) &= \mathbb{E}(e^{tz}) = \int_{\mathbb{R}} e^{tz} \frac{1}{\sqrt{2\pi}} e^
 &= e^{t^2/2}
 \end{aligned}
 $$
-Therefore, by the property of moment generating function
+Therefore, by the property of MGF
 $$
 \begin{aligned}
 E(Z^{2n}) &= \left[ \frac{d^{2n}}{dt^{2n}}\Big(  e^{t^2/2} \Big) \right]_{t=0} \\
@@ -101,7 +101,7 @@ $$
 \mathbb{P}[X \leq x_p] = \mathbb{P}[|Z| \leq x_p] = \mathbb{P}[-x_p \leq Z  \leq x_p]=p \in (0,1)
 \end{aligned}
 $$
-The last term is because $p>0$ is known, so we are sure about $x_p>0$, otherwise we must have $p=0$. Note that $\mathcal{N}(0,1)$ is symmetric over $x=0$, so
+The second equal sign is a result of knowing that $p > 0$, which assures us that $x_p \geq 0$; otherwise, we would have $p = 0$. Note that $\mathcal{N}(0,1)$ is symmetric about $x=0$, so
 $$
 \begin{aligned}
 &\mathbb{P}[-x_p \leq Z  \leq x_p] = \Phi(x_p)-\Phi(-x_p) = 2\Phi(x_p)-1=p\\
@@ -123,8 +123,6 @@ $$
  \bar{F}(t+s) = \bar{F}(t)\bar{F}(s), \,\forall\,t,s>0
 $$
 
-
-
 So for all integer $m,n \geq 1$ and all positive real number $t$, we have
 $$
 \begin{aligned}
@@ -133,15 +131,15 @@ $$
 &\bar{F}(mt) = \bar{F}(t+t+\cdots+t) = \left( \bar{F}(t) \right)^m
 \end{aligned}
 $$
-then
+thus
 $$
-\bar{F}\left(\frac{m}{n}t\right)  = \left( \bar{F}(t) \right)^{\frac{m}{n}}
+\bar{F}\left(\frac{m}{n}t\right)  = \left( \bar{F}(t) \right)^{\frac{m}{n}} \quad\quad\quad\quad(*)
 $$
-Note that here $\frac{m}{n}$ is a positive rational number, it's known that for any real number, there exists some rational sequence that converges to it ref:( [click](http://mathonline.wikidot.com/constructing-rational-irrational-sequences-which-converge-to)). Therefore, we can construct $m/n$ to be such convergent rational sequence, i.e. we have
+Note that here $\frac{m}{n}$ is a positive rational number, it's known that for any real number, there exists some rational sequence that converges to it ref:( [click](http://mathonline.wikidot.com/constructing-rational-irrational-sequences-which-converge-to)). Therefore, we can construct $\{m/n\}$ as such a convergent rational sequence, i.e. we have
 $$
-\lim_{n \to +\infty} x_n = x,
+\lim_{n \to +\infty} x_n = x,\quad \bar{F}\left(x_nt\right)  = \left( \bar{F}(t) \right)^{x_n}
 $$
-in which $x_n$ is a positive rational number and $x>0$. By continuity of CDF $F(x)$ and further $\bar{F}(x)$, we take $n\to +infty$ at both sides of the equation above
+in which $x_n$ is a positive rational number and $x>0$. By continuity of the CDF $F(x)$ and, subsequently, $\bar{F}(x)$, we take the limit $n\to +infty$ on both sides of the equation above,
 $$
 \begin{aligned}
 \lim_{n \to +\infty} \bar{F}\left(x_nt\right) &=   \bar{F}\left(\lim_{n \to +\infty}x_nt\right) = \bar{F}\left(xt\right) \\
@@ -163,7 +161,7 @@ $$
 F(x) = 1-e^{-\lambda x}, x>0,\lambda = -\ln (1-F(1))
 $$
 For $x\leq0$, it's given that X is a positive r.v., so $F(x)=0, \text{ when } x\leq0$.      
-It's clear that $X$ follows exponential distribution.
+It's evident that $X$ follows an exponential distribution.
 
 <!--
 Now consider
@@ -174,17 +172,17 @@ $$
 
 ## Problem 4
 ### (a)
-Suppose there are $n$ indistinguishable balls (i.e. identical) to be placed into $k$ distinguishable cells (i.e. numbered 1 to $k$) without any restriction (i.e. any number of balls can be placed into a cell).    
-It's known that the total ways of distribution is
+Suppose there are $n$ indistinguishable balls to be placed into $k$ distinguishable cells (e.g. numbered 1 to $k$) without any restriction (i.e. any number of balls can be placed into a cell).    
+It is known that the total number of ways of distribution is
 $$
 n+k-1\choose{k-1}
 $$
 
-We can also place the balls in two steps. First, we place $i, 0\leq i\leq n$ balls into the first cell. Then, for the rest $n-i$ balls, we place them into the rest $k-2$ cells as before. So the total ways of distribution is
+We can also distribute the balls in two steps. First, we place $i, 0\leq i\leq n$ balls into the first cell. Then, for the remaining $n-i$ balls, we place them into the remaining $k-1$ cells as before. Therefore, the total number of ways of distribution is,
 $$
 \sum_{i=0}^n  {n-i+k-2\choose{k-2}}
 $$
-These two value should be equal,
+These two values should be equal,
 $$
 {n+k-1\choose{k-1}} = \sum_{i=0}^n  {n-i+k-2\choose{k-2}}
 $$
@@ -199,6 +197,7 @@ $$
 &{n+1\choose{r+1}} = \frac{(n+1)n(n-1)}{6} = \sum_{i=r}^{n}{i\choose{r}} =\sum_{i=2}^n \frac{i(i-1)}{2} \\
 \end{aligned}
 $$
+so
 $$
 \begin{aligned}
 \sum_{i=1}^n i^2 &= 1+2\sum_{i=2}^n \frac{i(i-1)}{2}+\sum_{i=2}^n i\\
@@ -272,14 +271,14 @@ E(e^{tX}) & = \sum_{x=0}^{+\infty} e^{tx} {{r+x-1}\choose x} p^r(1-p)^x \\
 &=\left(\frac{p}{1-e^t+pe^t}\right)^r , t < -\ln(1-p)
 \end{aligned}
 $$
-The last equal sign is because we treat $1-e^t+pe^t$ as the parameter of negative binomial distribution and use the normalization of PMF.
+The last equal sign results from treating $1-e^t+pe^t$ as the parameter of the negative binomial distribution and applying the normalization of PMF.
 
 ### (e) 2.31
-By the definition of MGF, no matter what distribution $X$ is, we must have
+By the definition of MGF, for any distribution of $X$, we must have
 $$
 M_X(0) = E(e^{0X}) = E(1)=1
 $$
-However, in $M_X(t)=t/(t-1)$, $M_X(0)=0$. Therefore, $M_X(t)$ can't be an MGF and such distribution doesn't exist.
+However, in $M_X(t)=t/(t-1)$, $M_X(0)=0$. Therefore, $M_X(t)$ can't be an MGF and such a distribution $X$ doesn't exist.
 
 ## Problem 6
 Leibniz integral rule tells that
@@ -319,12 +318,13 @@ $$
 
 Justify:
 
-Leibniz integral rule requires that $f(x,t)$ and its partial derivative are both continuous. All integrands are elementary functions, so they are continuous. This rule also requires that the upper and lower limit are also continuous, which is satisfied. Therefore, we can use Leibniz integral rule.
+The Leibniz integral rule requires that both $f(x,t)$ and its partial derivative are continuous. All integrands in this context are elementary functions, ensuring continuity. Additionally, this rule necessitates that the upper and lower limits are continuous, which is satisfied in this case. Therefore, we can indeed use the Leibniz integral rule.
 
-We can also verify by directly calculation.
+Alternatively, we can verify by direct calculation.     
+
 (a)   
-$$\frac{d}{dx}\left(\int_0^x e^{-\lambda t} dt\right) =\frac{d}{dx} \left( -\frac{1}{\lambda}e^{-\lambda x} + \frac{1}{\lambda}    \right) = e^{-\lambda x}
-
+$$
+\frac{d}{dx}\left(\int_0^x e^{-\lambda t} dt\right) =\frac{d}{dx} \left( -\frac{1}{\lambda}e^{-\lambda x} + \frac{1}{\lambda}    \right) = e^{-\lambda x}
 $$
 
 (b)   
