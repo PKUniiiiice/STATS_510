@@ -1,0 +1,598 @@
+---
+title: "STATS 510 HW4"
+author: "Minxuan Chen"
+date: "2023/10/31"
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    fig_width: 6
+    fig_height: 5
+  html_document:
+    fig_width: 6
+    toc_depth: 4
+  word_document:
+    toc_depth: '4'
+fontsize: 12pt
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = TRUE,
+	warning = TRUE
+)
+```
+
+## Problem 1
+### (4.1)
+We convert the probability to expectation to calculate.    
+(a). 
+$$
+\begin{aligned}
+P(X^2+Y^2<1)&=E(\mathbb{I}(X^2+Y^2<1))\\
+&=\int_{[-1,1]\times[-1,1]}\mathbb{I}(X^2+Y^2<1) f(x,y)dxdy \\
+&=\frac{1}{4}\int_{x^2+y^2<1}1 \cdot dxdy \quad(\text{changing domain of double integral})\\
+&=\frac{1}{4}\text{Area}(x^2+y^2<1) \quad(\text{Defination of area})\\
+&=\frac{\pi}{4}
+\end{aligned}
+$$
+(b).   
+Note that the inequality $2x-y>0$ together with the square $[-1,1]\times[-1,1]$ define a trapezoid $T$, whose vertices are
+$(-0.5, -1),(1,-1),(1,1),(0.5,1)$. Similarly
+$$
+\begin{aligned}
+P(2X-Y>0) &= E(\mathbb{I}(2X-Y>0))\\
+&=\frac{1}{4} Area(\text{T})\\
+&=\frac{1}{4}\times \frac{1}{2} \times 2 \times (1.5+0.5) \\
+&=\frac{1}{2}
+\end{aligned}
+$$
+(c).   
+By triangle inequality, $|X+Y| \leq |X|+|Y|$. Note that the point $(X,Y)$ is distributed on a square $[-1,1]\times[-1,1]$, so $\max(|X|+|Y|)=1+1=2$. Therefore, the event $|X+Y|\leq2$ must happen. Note that a single point or line probability in $\mathbb{R}^2$ is zero, so
+$$
+P(|X+Y|<2)=1
+$$
+
+### (4.10)
+(a).  
+Note that
+$$
+P(X=1,Y=4)=0
+$$
+however
+$$
+\begin{aligned}
+&P(X=1)=\sum_yP(X=1,Y=y)=1/4\\
+&P(Y=4)=\sum_xP(X=x,Y=4)=1/3
+\end{aligned}
+$$
+so
+$$
+P(X=1,Y=4) \neq P(X=1)\cdot P(Y=4)=\frac{1}{12}
+$$
+
+Therefore, $X$ and $Y$ are dependent.
+
+(b).  
+We calculate the marginals at first and then use
+$$
+P(U=u,V=v)=P(U=u)P(V=v)
+$$
+to get the joint distribution table of $U,V$.
+```{r}
+uv <- matrix(c(1/12,1/6,0,1/6,0,1/3,1/12,1/6,0), ncol=3)
+colnames(uv) <- paste("u =",1:3)
+rownames(uv) <- paste("v =",2:4)
+#marginal
+u <- colSums(uv); u
+v <- rowSums(uv); v
+#joint distribution
+uv <- tcrossprod(v, u)
+colnames(uv) <- paste("u =",1:3)
+rownames(uv) <- paste("v =",2:4)
+uv
+```
+
+## Problem 2
+### (4.4)
+(a).   
+By definition of probability
+$$
+\begin{aligned}
+\int_\mathbb{R^2} f(x,y) dxdy &= 1\\
+&=\int_0^1\int_0^2 C(x+2y) dxdy \\
+&=\int_0^1 dy \int_0^2 C(x+2y)dx \\
+&=\int_0^1 C(2+4y)dy \\
+&=C\left(\left.(2y+2y^2)\right|_0^1\right)\\
+&=4C
+\end{aligned}
+$$
+Therefore,
+$$
+C=\frac{1}{4}
+$$
+(b).    
+Integrate over $y$
+$$
+\begin{aligned}
+f(x) &= \int_0^1 f(x,y) dy \\
+&=\frac{1}{4} \int_0^1 (x+2y) dy\\
+&=\frac{1}{4} \left(\left.(xy+y^2)\right|_0^1\right)\\
+&=\left(\frac{1}{4}x+\frac{1}{4}\right)\mathbb{I}(0<x<2)
+\end{aligned}
+$$
+(c).   
+When $0<y<1$ and $0<x<2$
+$$
+\begin{aligned}
+F(x,y) &= \int_{-\infty}^x\int_{-\infty}^y f(s,t) dsdt \\
+&=\int_{0}^x ds \int_{0}^y f(s,t) dt \\
+&=\frac{1}{4} \int_{0}^x ds \int_{0}^y  (s+2t) dt \\
+&=\frac{1}{4} \int_{0}^x sy+y^2 \,ds \\
+&=\frac{x^2y}{8}+\frac{xy^2}{4}
+\end{aligned}
+$$
+If $x \geq 2,0<y<1$
+$$
+\begin{aligned}
+F(x,y)&=\frac{1}{4} \int_{0}^y dt \int_{0}^2  (s+2t) ds \\
+&=\frac{1}{4}  \int_{0}^y 2+4t \, dt \\
+&=\frac{1}{2}y+\frac{1}{2}y^2
+\end{aligned}
+$$
+If $0<x<2,y\geq1$
+$$
+\begin{aligned}
+F(x,y)&=\frac{1}{4} \int_{0}^x ds \int_{0}^1  (s+2t) dt \\
+&=\frac{1}{4}  \int_{0}^x  s+1\, ds \\
+&=\frac{1}{4}x+\frac{1}{8}x^2
+\end{aligned}
+$$
+If $x\geq2,y\geq1$
+$$F(x,y)=1$$
+If $x\leq0$ or $y\leq0$
+$$
+F(x,y)=0
+$$
+In total,
+$$
+\begin{aligned}
+F(x,y)=\left\{\begin{array}{cl}
+\frac{x^2y}{8}+\frac{xy^2}{4}, & 0<x<2, 0<y<1 \\
+\frac{1}{4}x+\frac{1}{8}x^2,   & 0<x<2,y\geq1\\
+\frac{1}{2}y+\frac{1}{2}y^2,  & x \geq 2,0<y<1 \\
+1, &x\geq2,y\geq1 \\
+0, & \text{otherwise}
+\end{array} \right.
+\end{aligned}
+$$
+(d).   
+The density of $X$ is
+$$
+f(x)=\left(\frac{1}{4}x+\frac{1}{4}\right)\mathbb{I}(0<x<2)
+$$
+On $0<x<2$, the function $z=9/(x+1)^2$ is monotone, and we have
+$$
+x = \sqrt{\frac{9}{z}}-1
+$$
+So
+$$
+\begin{aligned}
+f(z) &= \left|\frac{dx}{dz}\right|f(x) \\
+&=\frac{3}{2}\frac{1}{z^{3/2}} \frac{1}{4}\sqrt{\frac{9}{z}}\\
+&=\frac{9}{8z^{2}} \mathbb{I}(1<z<9)
+\end{aligned}
+$$
+
+### (4.5)
+(a).       
+The domain defined by $x>\sqrt{y}, 0\leq x \leq1, 0 \leq y \leq 1$ is the area under the curve $y=x^2, 0 \leq x \leq 1$ in quadrant 1, denoting by $D$.
+$$
+\begin{aligned}
+P(X>\sqrt{Y}) &= E(\mathbb{I(X>\sqrt{Y})}) \\
+&=\int_{D} x+y\, dxdy \\
+&=\int_0^1 dx \int_0^{x^2} x+y \,dy \\
+&=\int_0^1  x^3+\frac{x^4}{2}\,  dx \\
+&=\frac{7}{20}
+\end{aligned}
+$$
+(b).   
+The domain defined by $x^2<y<x, 0\leq x \leq1, 0 \leq y \leq 1$ is the area surrounded by the curve $y=x^2$ and $y=x$, denoting by $D$.
+$$
+\begin{aligned}
+P(X^2<Y<X) &= E(\mathbb{I(X^2<Y<X)}) \\
+&=\int_{D} 2x\, dxdy \\
+&=\int_0^1 dx \int_{x^2}^{x} 2x \,dy \\
+&=\int_0^1 (2x^2-2x^3) dx \\
+&=\frac{1}{6}
+\end{aligned}
+$$
+
+## Problem 3
+### (4.6)
+We use hour as unit. Denote the difference of A and B's arrival time and 1 PM by $X,Y$, resp. It's known that
+$$
+X\sim \mathcal{U}(0,1), Y\sim \mathcal{U}(0,1), X \perp\!\!\!\!\perp Y
+$$
+So the joint distribution of $(X,Y)$ is still uniform, on the square $[0,1]\times[0,1]$.     
+The length $T$ of time that A waits for B is
+$$
+T=\max \{Y-X, 0\}
+$$
+We consider the cdf of $T$, $F_T(t)$.   
+When $t<0$, obviously $$
+F_T(t)=0
+$$
+When $t=0$
+$$
+\begin{aligned}
+F_T(t)&=P(T\leq t)\\
+&= P(T<0)+P(T=0) = P(T=0)\\
+&=P(T=0|Y<X)P(Y<X)+P(T=0|Y\geq X)P(Y \geq X) \\
+&=1\cdot P(Y<X) + P(Y=X|Y\geq X) P(Y\geq X)
+\end{aligned}
+$$
+Note that $X,Y$ are continuous random variable, so
+$$
+P(Y=X|Y\geq X) = 0
+$$
+thus
+$$
+P(T=0) = P(Y<X)
+$$
+The event $Y<X$ defines a triangle, so
+$$
+F_T(t=0)=P(Y<X) = \frac{1}{2}\times1\times1=\frac{1}{2}
+$$
+When $0<t<1$
+$$
+\begin{aligned}
+F_T(t) = P(T \leq t) &= P(\max \{Y-X, 0\} \leq t) \\
+&=P(Y-X\leq t, 0\leq t) \\
+&=P(Y-X \leq t) \\
+&=1-P(Y-X > t) \\
+&=1-\int_0^{1-t}dx\int_{x+t}^1 1 \, dy \\
+&=1-\int_0^{1-t} 1-(x+t)  dx \\
+&=1-(1-t-(1-t)^2/2-t(1-t))\\
+&=\frac{1}{2}+t-\frac{t^2}{2}
+\end{aligned}
+$$
+When $t\geq1$, obviously,
+$$F_T(t)=1$$
+In total, the distribution of $T$ is
+$$
+\begin{aligned}
+F_T(t)=\left\{\begin{array}{ll}
+0, & t<0 \\
+\frac{1}{2}, &t=0 \\
+\frac{1}{2}+t-\frac{t^2}{2}, & 0<t<1 \\
+1, & t\geq 1
+\end{array} \right.
+\end{aligned}
+$$
+
+
+### (4.12)
+Three pieces requires two broken points. Denote them by $X,Y$. Without loss of generality, let the length of the stick be 1. Then
+$$
+X\sim \mathcal{U}(0,1), Y\sim \mathcal{U}(0,1), X \perp\!\!\!\!\perp Y
+$$
+The length of three pieces are
+$$
+\begin{aligned}
+&T_1 = \min\{X, Y\} = \frac{1}{2}(X+Y-|X-Y|)\\
+&T_2 = |X-Y|\\
+&T_3=1-\max\{X,Y\} = 1-\frac{1}{2}(X+Y+|X-Y|)
+\end{aligned}
+$$
+To form a triangle, it's required that
+$$
+T_1+T_2\geq T_3, T_1+T_3\geq T_2, T_2+T_3\geq T_1  
+$$
+So the probability is
+$$
+\begin{aligned}
+P(\text{triangle}) &= P(T_1+T_2\geq T_3, T_1+T_3\geq T_2, T_2+T_3\geq T_1  ) \\
+&=P(X+Y+|X-Y| \geq 1, |X-Y|\leq \frac{1}{2}, X+Y-|X-Y| \leq 1) 
+\end{aligned}
+$$
+by removing the absolute symbol, we have
+$$\begin{aligned}
+&X-Y \geq 1-X-Y \text{ or } X-Y\leq X+Y-1,\\
+&-1/2\leq X-Y \leq 1/2 \\
+&X-Y \geq X+Y-1 \text{ or } X-Y\leq 1-X-Y
+\end{aligned}
+$$
+simplify this, we have
+$$
+X-Y \geq 1-X-Y,-1/2\leq X-Y \leq 1/2, X-Y \geq X+Y-1  \quad (A)
+$$
+or
+$$
+X-Y\leq X+Y-1,-1/2\leq X-Y \leq 1/2,X-Y\leq X+Y-1  \quad (B)
+$$
+any other situations will result in zero probability. Event A defines a triangle, whose vertices are $(1/2,0), (1/2,1/2), (1,1/2)$. Event B also defines a triangle, whose vertices are $(0,1/2), (1/2,1/2), (1/2,1)$. Note that $(X,Y)$ are uniform on the square, so
+$$
+\begin{aligned}
+P(\text{triangle}) &= P(A)+P(B) \\
+&=\frac{1}{2}\cdot\frac{1}{2}\cdot\frac{1}{2} + \frac{1}{2}\cdot\frac{1}{2}\cdot\frac{1}{2} \\
+&=\frac{1}{4}
+\end{aligned}
+$$
+
+## Problem 4
+### (4.16)
+(a).     
+The support of the joint distribution $(U,V)$ is $\{u=1,2,\cdots, v=0, \pm1, \pm2\}$. We calculate the pmf $P(U=u, V=v)$.    
+It's known that
+$$
+X\sim \text{Geo}(p), Y\sim \text{Geo}(p), X \perp\!\!\!\!\perp Y
+$$
+When $v>0$, we have $X-Y=v>0$, then $U=Y$, so
+$$
+\begin{aligned}
+P(u,v) &= P(Y=u, X-Y=v)=P(Y=u, X=u+v)\\
+&=(1-p)^{u+v-1}p(1-p)^{u-1}p\\
+&=(1-p)^{2u+v-2}p^2
+\end{aligned}
+$$
+When $v<0$, we have $X-Y=v<0$, then $U=X$, so
+$$
+\begin{aligned}
+P(u,v) &= P(X=u, X-Y=v)=P(X=u, Y=u-v)\\
+&=(1-p)^{u-1}p(1-p)^{u-v-1}p\\
+&=(1-p)^{2u-v-2}p^2
+\end{aligned}
+$$
+When $v=0$, we have $X=Y$
+$$
+\begin{aligned}
+P(u,v) &= P(X=Y=u)\\
+&=(1-p)^{2u-2}p^2
+\end{aligned}
+$$
+In all three cases, we can write the pmf as
+$$
+P(u,v)=(1-p)^{2u+|v|-2}p^2 = \left(p^2 (1-p)^{2u}\right)(1-p)^{|v|-2}, \forall u,v
+$$
+By Lemma 4.2.7, $U$ and $V$ are independent.    
+(b).       
+Note that both $X,Y$ are positive integers, so the value of $Z$ must be a positive rational number and less than 1. Denote it by $\frac{m}{n}, m<n$. Let $r=m, s=n-m$. We consider the $X,Y$ pairs $(r,s), (2r,2s),\cdots, (kr,ks),\cdots$. By the property of rational number, we have $Z=m/n$ iff. $(X,Y)=(kr,ks), k=1,2,\cdots$. Therefore
+$$
+\begin{aligned}
+P(Z=\frac{m}{n})&=\sum_{k=1}^{+\infty}P(X=kr, Y=ks)\\
+&=\sum_{k=1}^{+\infty}P(X=kr)P(Y=ks) \quad(\text{by } X \perp\!\!\!\!\perp Y)\\
+&=\sum_{k=1}^{+\infty} (1-p)^{kr-1}p(1-p)^{ks-1}p \\
+&=\sum_{k=1}^{+\infty} (1-p)^{kr+ks-2}p^2 \\
+&=\sum_{k=1}^{+\infty}(1-p)^{kn-2}p^2 
+\quad(\text{geometric sequence}) \\
+&=\frac{p^2(1-p)^{n-2}}{1-(1-p)^n},n=2,3,\cdots
+\end{aligned}
+$$
+
+(c).  
+The support of $(X,X+Y)$ is $\{(s,t)|1\leq s <t,\,\, s, t \text{ are integers }\}$, so
+$$
+\begin{aligned}
+P(X=s,X+Y=t) &= P(X=s, Y=t-s)\\
+&=P(X=s)P(Y=t-s)\\
+&=(1-p)^{s-1}p(1-p)^{t-s-1}p\\
+&=(1-p)^{t-2}p^2
+\end{aligned}
+$$
+
+
+### (4.17)
+By definition of $Y$, we have
+$$
+\begin{aligned}
+P(Y=i+1)&=P(i\leq X \leq i+1)\\
+&=\int_{i}^{i+1} e^{-x} dx \\
+&=-e^{-x}|_{i}^{i+1} = (1-e^{-1})e^{-i}
+\end{aligned}
+$$
+Note that 
+$$
+(1-e^{-1})e^{-i}=(1-(1-e^{-1}))^i(1-e^{-1})
+$$
+Therefore
+$$
+Y \sim \text{Geo}(1-e^{-1})
+$$
+(b).   
+$Y \geq 5$ means $Y=5, Y=6, Y=7,\cdots$, which is equivalent to
+$$
+4\leq X<5, 5\leq X<6,\cdots \Rightarrow X\geq4
+$$
+Therefore, we consider the cdf of $X-4|Y \geq 5$
+$$
+\begin{aligned}
+P(X-4\leq x|Y \geq 5) &= P(X-4 \leq x|X\geq 4) \\
+&=1-P(X>x+4|X\geq 4)
+\end{aligned}
+$$
+Note that $X$ is exponential distribution, by its memorylessness
+$$
+\begin{aligned}
+P(X-4\leq x|Y \geq 5) &= 1-P(X>x) = P(X \leq x) = 1-e^{-x}
+\end{aligned}
+$$
+So, the conditional distribution of $X-4$ given $Y\geq 5$ is exponential(1).
+
+## Problem 5 (4.19)
+### (a)
+From 
+$$
+X_1, X_2 \stackrel{\text{i.i.d}}{\sim} N(0,1)
+$$
+by the property of normal distribution, we have
+$$
+X_1-X_2 \sim N(0, 2)
+$$
+thus
+$$
+\frac{1}{\sqrt{2}} (X_1-X_2) \sim N(0,1)
+$$
+By the relationship between normal distribution and chi-squared distribution, we have
+$$
+\frac{(X_1-X_2)^2}{2} \sim \chi^2(1)
+$$
+### (b)
+It's known that
+$$
+X_1 \sim \Gamma(\alpha_1, 1), X_2 \sim \Gamma(\alpha_2, 1), X_1 \perp\!\!\!\!\perp X_2
+$$
+so the joint distribution is
+$$
+f(x_1, x_2) = \frac{x_1^{\alpha_1-1}e^{-x_1}} {\Gamma(\alpha_1)} \frac{x_2^{\alpha_2-1} e^{-x_2}}{\Gamma(\alpha_2)}
+$$
+Let
+$$
+Y_1=\frac{X_1}{X_1+X_2}, Y_2=X_1+X_2
+$$
+then
+$$
+X_1 = Y_1Y_2, X_2=Y_2(1-Y_1)
+$$
+So, we derive a one-to-one transformation between $(X_1,X_2)$ and $(Y_1,Y_2)$. By (4.3.2),
+$$
+f(y_1,y_2) = f(x_1, x_2) |J|
+$$
+in which
+$$
+J=\left|\begin{array}{ll}
+\frac{\partial x_1}{\partial y_1} & \frac{\partial x_1}{\partial y_2} \\
+\frac{\partial x_2}{\partial y_1} & \frac{\partial x_2}{\partial y_2}
+\end{array}\right|=\left|\begin{array}{rr}
+y_2 & y_1 \\
+-y_2 & 1-y_1
+\end{array}\right| = |y_2|=y_2
+$$
+Therefore
+$$
+\begin{aligned}
+f(y_1,y_2) &=  \frac{x_1^{\alpha_1-1}e^{-x_1}} {\Gamma(\alpha_1)} \frac{x_2^{\alpha_2-1} e^{-x_2}}{\Gamma(\alpha_2)} y_2 \\
+&= \frac{(y_1y_2)^{\alpha_1-1}e^{-y_1y_2}} {\Gamma(\alpha_1)} \frac{(y_2(1-y_1))^{\alpha_2-1} e^{-y_2(1-y_1)}}{\Gamma(\alpha_2)} y_2 \\
+&=
+\frac{y_1^{\alpha_1-1}(1-y_1)^{\alpha_2-1}}{\Gamma(\alpha_1)\Gamma(\alpha_2)/\Gamma(\alpha_1+\alpha_2)} \frac{y_2^{\alpha_1+\alpha_2-1}e^{-y_2}}{\Gamma(\alpha_1+\alpha_2)}\\
+&=\frac{y_1^{\alpha_1-1}(1-y_1)^{\alpha_2-1}}{\text{B}(\alpha_1,\alpha_2)} \frac{y_2^{\alpha_1+\alpha_2-1}e^{-y_2}}{\Gamma(\alpha_1+\alpha_2)}
+\end{aligned}
+$$
+Note that the joint distribution can be factorized to two parts and we can read out the marginal distribution of $Y_1$ and $Y_2$. That is
+$$
+Y_1 \sim \text{Beta}(\alpha_1, \alpha_2),
+\quad Y_2 \sim \Gamma(\alpha_1+\alpha_2)
+$$
+Moreover, note that
+$$
+\frac{X_2}{X_1+X_2}=1-Y_1 :=U
+$$
+so
+$$
+\begin{aligned}
+f_U(u) &= f(y_1) \left|\frac{dy_1}{du} \right| \\
+&=\frac{y_1^{\alpha_1-1}(1-y_1)^{\alpha_2-1}}{\text{B}(\alpha_1,\alpha_2)} \cdot 1 \\
+&=\frac{u^{\alpha_2-1}(1-u)^{\alpha_1-1}}{\text{B}(\alpha_1,\alpha_2)} \\
+&\sim \text{Beta}(\alpha_2,\alpha_1)
+\end{aligned}
+$$
+Overall, the marginal distribution of $X_1/(X_1+X_2)$ is $\text{Beta}(\alpha_1, \alpha_2)$ and the marginal distribution of $X_2/(X_1+X_2)$ is $\text{Beta}(\alpha_2, \alpha_1)$.
+
+## Problem 6 (4.26)
+### (a)
+It's known that
+$$
+X\sim \mathcal{E}(\lambda), Y\sim \mathcal{E}(\mu), X\perp\!\!\!\!\perp Y
+$$
+so the joint distribution of $(X,Y)$ is
+$$
+f(x,y)=f(x)f(y)=\lambda e^{-\lambda x} \mu e^{-\mu y} ,x,y\geq 0
+$$
+We consider the cdf $P(Z \leq z, W \leq w)$ of this distribution.
+Obviously, if $w<0$ or $z<0$, $P(Z \leq z, W \leq w)=0$.
+
+If $0\leq w<1,z\geq0$, we have
+$$
+\begin{aligned}
+P(Z \leq z, W \leq w) &= P(Z \leq z, W<0)\\
+&\quad+P(Z \leq z, W=0)\\
+&\quad+P(Z \leq z, 0<W\leq w) \\
+&=P(Z \leq z, W=0)
+\end{aligned}
+$$
+then
+$$
+\begin{aligned}
+P(Z \leq z, W=0) &= P(\min\{X,Y\}\leq z, Z=Y) \\
+&=P(Y\leq z, Y\leq X)\\
+&=\int_0^{z}\int_y^{+\infty} f(x,y) dxdy  \\
+&=\int_0^z \mu e^{-\mu y}e^{-\lambda y} dy \\
+&=\frac{\mu}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right)
+\end{aligned}
+$$
+so
+$$
+P(Z \leq z, W \leq w)  =\frac{\mu}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right), 0\leq w<1,z\geq0
+$$
+
+If $w\geq 1,z\geq0$, we have
+$$
+\begin{aligned}
+P(Z \leq z, W \leq w) &= P(Z \leq z, W<0)+P(Z \leq z, W=0)\\
+&\quad+P(Z \leq z, 0<W<1) + P(Z \leq z, W=1)  \\
+&\quad+P(Z \leq z, 1<W\leq w) \\
+&=P(Z \leq z, W=0) + P(Z \leq z, W=1)
+\end{aligned}
+$$
+we calculate $P(Z \leq z, W=1)$.
+$$
+\begin{aligned}
+P(Z \leq z, W=1) &= P(\min\{X,Y\}\leq z, Z=X) \\
+&=P(X\leq z, X\leq Y)\\
+&=\int_0^{z}\int_x^{+\infty} f(x,y) dydx  \\
+&=\int_0^z \lambda e^{-\lambda x}e^{-\mu x} dx \\
+&=\frac{\lambda}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right)
+\end{aligned}
+$$
+So
+$$
+P(Z \leq z, W \leq w)  =1-e^{-(\lambda+\mu)z}, 1\leq w,z\geq0
+$$
+Overall, the cdf of $(Z,W)$ is
+$$
+\begin{aligned}
+F_{Z,W}(z,w)=\left\{\begin{array}{ll}
+\frac{\mu}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right), & 0\leq w<1,z\geq0 \\
+1-e^{-(\lambda+\mu)z},& 1\leq w,z\geq0 \\
+0, &\text{otherwise}
+\end{array} \right.
+\end{aligned}
+$$
+
+### (b)
+From (a)
+$$
+P(Z\leq z) = P(Z \leq z, W=0)+P(Z \leq z, W=1) = 1-e^{-(\lambda+\mu)z}
+$$
+$$
+\begin{aligned}
+P(Z \leq z|W=0) &= \frac{P(Z \leq z, W=0)}{P(W=0)} \\
+&= \frac{P(Z \leq z, W=0)}{P(Z \leq +\infty, W=0)} \\
+&=\frac{\frac{\mu}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right)}{\frac{\mu}{\mu+\lambda}}\\
+&=1-e^{-(\lambda+\mu)z} =P(Z\leq z)
+\end{aligned}
+$$
+$$
+\begin{aligned}
+P(Z \leq z|W=1) &= \frac{P(Z \leq z, W=1)}{P(W=1)} \\
+&= \frac{P(Z \leq z, W=1)}{P(Z \leq +\infty, W=1)} \\
+&=\frac{\frac{\lambda}{\mu+\lambda}\left(1-e^{-(\lambda+\mu)z}\right)}{\frac{\lambda}{\mu+\lambda}}\\
+&=1-e^{-(\lambda+\mu)z}=P(Z\leq z)
+\end{aligned}
+$$
+Therefore, 
+$$
+P(Z \leq z, W=i) = P(Z\leq z)P(W=i), i=0,1
+$$
+so $Z$ and $W$ are independent.
